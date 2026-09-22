@@ -176,6 +176,56 @@
     .cli-layout{grid-template-columns:1fr;}
   }
 
+  /* PBQ Bank */
+  .pbq-header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:14px;}
+  .pbq-header .pbq-sub{color:var(--text-dim);font-size:.85rem;max-width:640px;}
+  .pbq-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+  .pbq-pill{
+    width:36px;height:36px;border-radius:8px;border:1px solid var(--border);
+    background:var(--panel-2);color:var(--text-dim);font-size:.8rem;font-weight:700;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+  }
+  .pbq-pill:hover{border-color:var(--accent);}
+  .pbq-pill.current{border-color:var(--accent);box-shadow:0 0 0 2px rgba(34,211,238,.25);color:var(--text);}
+  .pbq-pill.correct{background:#0f3a2c;border-color:var(--accent-2);color:var(--accent-2);}
+  .pbq-pill.incorrect{background:#3a1e1e;border-color:var(--danger);color:var(--danger);}
+  .pbq-progress-row{display:flex;justify-content:space-between;font-size:.8rem;color:var(--text-dim);margin-bottom:4px;}
+  .pbq-progress-bar{height:8px;background:var(--panel-2);border-radius:99px;overflow:hidden;margin-bottom:20px;}
+  .pbq-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-3));transition:width .2s;}
+  .pbq-card{margin-bottom:14px;}
+  .pbq-card h3{margin:0 0 6px;font-size:1.05rem;}
+  .pbq-card .eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-dim);margin:0 0 8px;}
+  .pbq-card .category{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);font-weight:700;margin-bottom:6px;}
+  .pbq-card p{margin:0;color:var(--text-dim);font-size:.9rem;line-height:1.6;}
+  .pbq-tasks{margin:0;padding-left:20px;color:var(--text-dim);font-size:.9rem;line-height:1.8;}
+  .pbq-tasks li:first-child{color:var(--warn);font-weight:600;}
+  .pbq-hint-box{display:none;background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:.85rem;color:var(--text-dim);}
+  .pbq-hint-box.show{display:block;}
+  .pbq-options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+  .pbq-option{
+    background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;
+    cursor:pointer;font-size:.9rem;display:flex;align-items:center;gap:10px;
+  }
+  .pbq-option:hover{border-color:var(--accent);}
+  .pbq-option.selected{border-color:var(--accent);background:#123047;}
+  .pbq-option.correct-answer{border-color:var(--accent-2);background:#0f2a22;}
+  .pbq-option.wrong-answer{border-color:var(--danger);background:#2a1414;}
+  .pbq-option .marker{width:18px;height:18px;border-radius:4px;border:1px solid var(--border);flex-shrink:0;}
+  .pbq-option.selected .marker{background:var(--accent);border-color:var(--accent);}
+  .pbq-order-pool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+  .pbq-order-slots{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+  .pbq-order-slot{
+    min-height:44px;border:1px dashed var(--border);border-radius:8px;padding:10px 14px;
+    display:flex;align-items:center;gap:10px;color:var(--text-dim);font-size:.85rem;
+  }
+  .pbq-order-slot .slot-num{font-weight:700;color:var(--accent);}
+  .pbq-order-slot.filled{border-style:solid;color:var(--text);cursor:pointer;}
+  .pbq-dept-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:16px;}
+  .pbq-dept-card{background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:14px;}
+  .pbq-dept-card h4{margin:0 0 4px;font-size:.9rem;}
+  .pbq-dept-card .hosts-need{font-size:.78rem;color:var(--text-dim);margin-bottom:8px;}
+  .pbq-nav-row{display:flex;justify-content:space-between;margin-top:16px;}
+
   /* Results / print summary */
   .results-name-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:18px;}
   .results-name-row .field{min-width:220px;}
@@ -220,6 +270,7 @@
   <nav class="tabs" id="tabNav">
     <a href="index.html">&larr; Home</a>
     <button data-view="dashboard" class="active">Dashboard</button>
+    <button data-view="pbqbank">PBQ Practice (50)</button>
     <button data-view="topology">Topology Builder</button>
     <button data-view="subnetting">Subnetting</button>
     <button data-view="ports">Ports &amp; Protocols</button>
@@ -240,6 +291,57 @@
       <button class="reset-all" id="resetAllBtn">Reset all progress</button>
     </div>
     <p class="footer-note">These labs are self-graded practice tools built by Launchpad IT Solutions. They are not affiliated with or endorsed by CompTIA and are not a substitute for the official exam.</p>
+  </section>
+
+  <!-- PBQ BANK -->
+  <section class="view" id="view-pbqbank">
+    <div class="pbq-header">
+      <div>
+        <h2 class="view-title" style="margin-bottom:2px;">CompTIA Network+ PBQ Practice</h2>
+        <div class="pbq-sub">50 original performance-based questions aligned to the current Network+ (N10-009) exam objectives &mdash; every question is free, no sign-up, no paywall.</div>
+      </div>
+      <div class="pbq-sub" id="pbqQuestionOf"></div>
+    </div>
+
+    <div class="pbq-grid" id="pbqGrid"></div>
+
+    <div class="pbq-progress-row"><span id="pbqCompletedLabel">0 completed</span><span id="pbqRemainingLabel">50 remaining</span></div>
+    <div class="pbq-progress-bar"><div class="pbq-progress-fill" id="pbqProgressFill" style="width:0%;"></div></div>
+
+    <div class="card pbq-card">
+      <div class="category" id="pbqCategory"></div>
+      <h3 id="pbqTitle"></h3>
+      <p id="pbqSummary"></p>
+    </div>
+
+    <div class="card pbq-card" id="pbqScenarioCard">
+      <p class="eyebrow">Scenario</p>
+      <p id="pbqScenario"></p>
+    </div>
+
+    <div class="card pbq-card" id="pbqTasksCard">
+      <p class="eyebrow">Tasks</p>
+      <ol class="pbq-tasks" id="pbqTasks"></ol>
+    </div>
+
+    <div id="pbqInteractive"></div>
+
+    <div class="toolbar">
+      <button class="btn" id="pbqHintBtn">Need Hint?</button>
+    </div>
+    <div class="pbq-hint-box" id="pbqHintBox"></div>
+
+    <div class="toolbar">
+      <button class="btn primary" id="pbqSubmit">Submit Answer</button>
+      <button class="btn" id="pbqTryAgain">Try Again</button>
+    </div>
+
+    <div id="pbqResult"></div>
+
+    <div class="pbq-nav-row">
+      <button class="btn" id="pbqPrev">&larr; Previous</button>
+      <button class="btn" id="pbqNext">Next &rarr;</button>
+    </div>
   </section>
 
   <!-- TOPOLOGY BUILDER -->
@@ -390,6 +492,7 @@ function loadProgress(){
     if(raw) return JSON.parse(raw);
   }catch(e){}
   return {
+    pbqbank:{correctIds:[]},
     topology:{best:0}, subnetting:{best:0,rounds:0}, ports:{best:0}, cables:{best:0},
     cli:{ packs:{
       basics:{doneIds:[],total:5},
@@ -415,6 +518,7 @@ tabButtons.forEach(b=>b.addEventListener("click", ()=>showView(b.dataset.view)))
 
 /* ---------- Dashboard ---------- */
 const LAB_META = [
+  {key:"pbqbank", view:"pbqbank", icon:"📝", title:"CompTIA Network+ PBQ Practice", desc:"50 original performance-based questions covering every Network+ exam domain."},
   {key:"topology", view:"topology", icon:"🗺️", title:"Network Topology Builder", desc:"Drag-and-drop devices, cable them together, and get auto-graded against a scenario."},
   {key:"subnetting", view:"subnetting", icon:"🧮", title:"Subnetting Practice", desc:"Calculate subnet mask, network/broadcast address, and usable host ranges."},
   {key:"ports", view:"ports", icon:"🔢", title:"Port & Protocol Matching", desc:"Match common protocols to their correct port numbers and transport."},
@@ -423,6 +527,12 @@ const LAB_META = [
 ];
 function statusFor(key){
   const p = progress[key];
+  if(key==="pbqbank"){
+    const correct = p && p.correctIds ? p.correctIds.length : 0;
+    if(correct === 0) return {label:"Not Started", cls:"not-started"};
+    if(correct >= 50) return {label:"Mastered", cls:"mastered"};
+    return {label:"In Progress", cls:"in-progress"};
+  }
   if(key==="cli"){
     const packs = p && p.packs ? p.packs : {};
     let done=0, total=0;
@@ -455,7 +565,7 @@ function renderDashboard(){
     card.querySelector(".start-btn").addEventListener("click", ()=>showView(lab.view));
     grid.appendChild(card);
   });
-  document.getElementById("overallProgressPill").textContent = mastered + " / 5 labs mastered";
+  document.getElementById("overallProgressPill").textContent = mastered + " / " + LAB_META.length + " labs mastered";
 }
 document.getElementById("resetAllBtn").addEventListener("click", ()=>{
   if(confirm("Reset all saved progress on this device?")){
@@ -1390,6 +1500,733 @@ initMatchingLab({
 })();
 
 /* =========================================================
+   PBQ BANK (50 questions, CompTIA Network+ N10-009 objectives)
+   ========================================================= */
+(function(){
+  if(!progress.pbqbank) progress.pbqbank = {correctIds:[]};
+
+  const PBQ_BANK = [
+    // ---- Domain 1: Networking Concepts ----
+    {id:1, category:"Networking Concepts", title:"OSI Model Layers", type:"match",
+      summary:"Match each OSI layer to its correct function.",
+      leftLabel:"OSI Layer", rightLabel:"Function",
+      pairs:[
+        ["Layer 1 – Physical","Cabling, hubs, and repeaters; transmits raw bits"],
+        ["Layer 2 – Data Link","MAC addressing and switching; organizes bits into frames"],
+        ["Layer 3 – Network","IP addressing and routing between networks"],
+        ["Layer 4 – Transport","TCP/UDP; segments data and manages ports"],
+        ["Layer 5 – Session","Establishes and maintains sessions between applications"],
+        ["Layer 6 – Presentation","Formats, encrypts, and compresses data (e.g. TLS, JPEG)"],
+        ["Layer 7 – Application","End-user protocols like HTTP, FTP, and SMTP"]
+      ],
+      hint:"Remember the mnemonic 'Please Do Not Throw Sausage Pizza Away' from Layer 1 to Layer 7."},
+    {id:2, category:"Networking Concepts", title:"TCP vs. UDP", type:"multi",
+      summary:"Select every statement that correctly describes UDP.",
+      prompt:"Which of the following are true about UDP? (Select all that apply)",
+      options:["Connectionless protocol","Guarantees in-order, reliable delivery","Lower overhead than TCP","Used by DNS and DHCP","Uses a three-way handshake before sending data"],
+      correct:[0,2,3],
+      hint:"UDP trades reliability for speed — no handshake, no delivery guarantee, no sequencing."},
+    {id:3, category:"Networking Concepts", title:"Private & Reserved IPv4 Ranges", type:"match",
+      summary:"Match each address range to what it's used for.",
+      leftLabel:"Range", rightLabel:"Purpose",
+      pairs:[
+        ["10.0.0.0/8","Class A private address space"],
+        ["172.16.0.0/12","Class B private address space"],
+        ["192.168.0.0/16","Class C private address space"],
+        ["169.254.0.0/16","APIPA / link-local (auto-assigned when DHCP fails)"],
+        ["127.0.0.0/8","Loopback addresses"],
+        ["224.0.0.0/4","Multicast address range"]
+      ],
+      hint:"169.254.x.x on a device means it couldn't reach a DHCP server."},
+    {id:4, category:"Networking Concepts", title:"Corporate Network Subnetting", type:"subnet",
+      summary:"Allocate appropriate subnets to four departments based on host requirements using efficient VLSM addressing.",
+      scenario:"You've been assigned the network block 192.168.20.0/24 for a headquarters site. Divide it among four departments without wasting addresses or creating overlapping subnets.",
+      tasks:["Start with the largest host requirement first to avoid wasted IPs and overlapping subnets.","Calculate the minimum subnet size needed for each department.","Enter the correct network address and CIDR prefix for each department.","Avoid choosing subnets that are too small (insufficient hosts) or unnecessarily large (wasted IPs)."],
+      block:"192.168.20.0/24",
+      departments:[
+        {name:"Sales", hosts:60, answer:"192.168.20.0/26"},
+        {name:"IT", hosts:25, answer:"192.168.20.64/27"},
+        {name:"Engineering", hosts:12, answer:"192.168.20.96/28"},
+        {name:"Guest Wi-Fi", hosts:6, answer:"192.168.20.112/29"}
+      ],
+      hint:"Sort departments by host count, largest first, and assign each the smallest subnet that fits, back to back starting from the top of the block."},
+    {id:5, category:"Networking Concepts", title:"IPv6 Address Types", type:"match",
+      summary:"Match each IPv6 address type to its description.",
+      leftLabel:"Address Type", rightLabel:"Description",
+      pairs:[
+        ["Global Unicast","Publicly routable address, similar to a public IPv4 address (2000::/3)"],
+        ["Link-Local","Non-routable, auto-configured, used only on the local link (fe80::/10)"],
+        ["Unique Local","Private IPv6 addressing for internal use only (fc00::/7)"],
+        ["Multicast","Delivers a packet to a group of interfaces (ff00::/8)"],
+        ["Loopback","::1 — refers to the local host itself"]
+      ],
+      hint:"fe80:: on an interface is the IPv6 equivalent of an APIPA address."},
+    {id:6, category:"Networking Concepts", title:"Identify the Topology", type:"single",
+      summary:"Read the scenario and identify the network topology being described.",
+      scenario:"Every device in the office connects directly to a central switch. If the switch fails, the entire segment loses connectivity, but a single cable failure only affects the one device using that cable.",
+      options:["Star topology","Full mesh topology","Bus topology","Ring topology"],
+      correct:0,
+      hint:"Think about what's at the center of the description — a single point every device connects to."},
+    {id:7, category:"Networking Concepts", title:"Max Wireless Speeds", type:"match",
+      summary:"Match each 802.11 standard to its maximum theoretical data rate.",
+      leftLabel:"802.11 Standard", rightLabel:"Max Data Rate",
+      pairs:[
+        ["802.11b","11 Mbps"],
+        ["802.11a / 802.11g","54 Mbps"],
+        ["802.11n (Wi-Fi 4)","600 Mbps"],
+        ["802.11ac (Wi-Fi 5)","6.9 Gbps"],
+        ["802.11ax (Wi-Fi 6)","9.6 Gbps"]
+      ],
+      hint:"Each generation roughly multiplies the max theoretical speed of the last."},
+    {id:8, category:"Networking Concepts", title:"Cloud Service & Deployment Models", type:"match",
+      summary:"Match each cloud term to its definition.",
+      leftLabel:"Term", rightLabel:"Definition",
+      pairs:[
+        ["IaaS","Provides virtualized computing infrastructure (VMs, storage, networking) over the internet"],
+        ["PaaS","Provides a platform for developing and deploying apps without managing infrastructure"],
+        ["SaaS","Delivers fully functional software applications over the internet"],
+        ["Public Cloud","Services offered over the public internet, shared among multiple tenants"],
+        ["Private Cloud","Dedicated cloud infrastructure used by a single organization"],
+        ["Hybrid Cloud","A combination of public and private cloud resources"]
+      ],
+      hint:"IaaS/PaaS/SaaS describe what you're renting; public/private/hybrid describe who it's shared with."},
+    {id:9, category:"Networking Concepts", title:"Ports & Protocols II", type:"match",
+      summary:"Match each protocol to its well-known port and transport.",
+      leftLabel:"Protocol", rightLabel:"Port / Transport",
+      pairs:[
+        ["LDAP","Port 389 (TCP)"],
+        ["LDAPS","Port 636 (TCP)"],
+        ["Kerberos","Port 88 (TCP/UDP)"],
+        ["SNMP","Port 161 (UDP)"],
+        ["SNMP Trap","Port 162 (UDP)"],
+        ["Syslog","Port 514 (UDP)"],
+        ["SIP","Port 5060 (TCP/UDP)"],
+        ["MySQL","Port 3306 (TCP)"]
+      ],
+      hint:"LDAPS is LDAP over TLS, similar to how HTTPS relates to HTTP."},
+    {id:10, category:"Networking Concepts", title:"Single-Mode Fiber Characteristics", type:"multi",
+      summary:"Select every statement that correctly describes single-mode fiber.",
+      prompt:"Which of the following are true about single-mode fiber? (Select all that apply)",
+      options:["Uses a laser light source","Supports longer distances than multi-mode fiber","Has a smaller core diameter than multi-mode fiber","Uses an LED light source","Susceptible to electromagnetic interference"],
+      correct:[0,1,2],
+      hint:"Single-mode is the long-haul option — think 'laser, long distance, small core'."},
+
+    // ---- Domain 2: Network Implementation ----
+    {id:11, category:"Network Implementation", title:"Inter-VLAN Routing", type:"single",
+      summary:"Determine what's required to let two VLANs communicate.",
+      scenario:"A network has two VLANs (10 and 20) connected to a single Layer 2 switch. Users on VLAN 10 need to communicate with users on VLAN 20.",
+      options:["A Layer 3 switch or router configured for inter-VLAN routing","A second Layer 2 switch","A wireless access point","A repeater"],
+      correct:0,
+      hint:"A plain Layer 2 switch can't route between different IP subnets — VLANs are separate broadcast domains."},
+    {id:12, category:"Network Implementation", title:"Point-to-Point WAN Subnetting", type:"subnet",
+      summary:"Allocate /30 subnets for three point-to-point WAN links.",
+      scenario:"You're assigning addressing for three new point-to-point WAN links out of the 10.10.10.0/24 block. Each link only needs 2 usable host addresses.",
+      tasks:["Point-to-point WAN links only need 2 usable addresses, so each should be a /30 subnet.","Assign the links back-to-back starting from the beginning of the block.","Enter the network address and CIDR prefix for each link."],
+      block:"10.10.10.0/24",
+      departments:[
+        {name:"Link A", hosts:2, answer:"10.10.10.0/30"},
+        {name:"Link B", hosts:2, answer:"10.10.10.4/30"},
+        {name:"Link C", hosts:2, answer:"10.10.10.8/30"}
+      ],
+      hint:"A /30 gives you exactly 4 addresses: network, 2 usable hosts, and broadcast — perfect for a WAN link."},
+    {id:13, category:"Network Implementation", title:"Routing Protocol Types", type:"match",
+      summary:"Match each routing protocol to its type.",
+      leftLabel:"Protocol", rightLabel:"Type",
+      pairs:[
+        ["RIP","Distance-vector, hop count metric, max 15 hops"],
+        ["OSPF","Link-state, uses cost metric, organized into areas"],
+        ["EIGRP","Cisco advanced distance-vector, uses a composite metric"],
+        ["BGP","Path-vector protocol used between autonomous systems (the Internet)"]
+      ],
+      hint:"BGP is the only one of these that routes between organizations rather than within one."},
+    {id:14, category:"Network Implementation", title:"Spanning Tree Port States", type:"match",
+      summary:"Match each STP port state to its description.",
+      leftLabel:"Port State", rightLabel:"Description",
+      pairs:[
+        ["Blocking","Does not forward frames; prevents loops"],
+        ["Listening","Prepares to forward frames but doesn't learn MAC addresses yet"],
+        ["Learning","Learns MAC addresses but doesn't yet forward frames"],
+        ["Forwarding","Fully operational; sends and receives data frames"],
+        ["Disabled","Administratively shut down; doesn't participate in STP"]
+      ],
+      hint:"The active states move in order: Blocking → Listening → Learning → Forwarding."},
+    {id:15, category:"Network Implementation", title:"Traffic Management Devices", type:"match",
+      summary:"Match each device to its purpose.",
+      leftLabel:"Device", rightLabel:"Purpose",
+      pairs:[
+        ["Load Balancer","Distributes traffic across multiple servers to improve availability and performance"],
+        ["Firewall","Filters traffic based on security rules to permit or deny communication"],
+        ["Forward Proxy","Sits between clients and the internet, forwarding client requests"],
+        ["Reverse Proxy","Sits in front of servers, forwarding client requests to the correct backend server"]
+      ],
+      hint:"Forward proxy protects/represents clients; reverse proxy protects/represents servers."},
+    {id:16, category:"Network Implementation", title:"5GHz vs. 2.4GHz", type:"multi",
+      summary:"Select every statement that correctly describes the 5GHz band.",
+      prompt:"Which of the following are true about the 5GHz Wi-Fi band? (Select all that apply)",
+      options:["Offers more non-overlapping channels than 2.4GHz","Has shorter range than 2.4GHz","Less susceptible to interference from common household devices","Better at penetrating walls than 2.4GHz","Only supported by the 802.11b standard"],
+      correct:[0,1,2],
+      hint:"Higher frequency generally means shorter range and less penetration, but more clean channels."},
+    {id:17, category:"Network Implementation", title:"Direct Switch-to-Switch Cabling", type:"single",
+      summary:"Choose the correct cable type for connecting two switches directly.",
+      scenario:"You need to connect two switches directly together with no intermediate device, and neither switch supports Auto-MDIX.",
+      options:["Crossover cable","Straight-through cable","Rollover cable","Coaxial cable"],
+      correct:0,
+      hint:"Straight-through connects dissimilar devices (PC-to-switch); this scenario connects two similar devices."},
+    {id:18, category:"Network Implementation", title:"NAT Types", type:"match",
+      summary:"Match each NAT type to its description.",
+      leftLabel:"NAT Type", rightLabel:"Description",
+      pairs:[
+        ["Static NAT","One-to-one mapping between a private and a public IP address"],
+        ["Dynamic NAT","Maps private IPs to a pool of public IPs on a first-come basis"],
+        ["PAT (NAT Overload)","Maps many private IPs to a single public IP using different port numbers"]
+      ],
+      hint:"PAT is what most home routers use — many devices sharing one public IP."},
+    {id:19, category:"Network Implementation", title:"DHCP DORA Process", type:"order",
+      summary:"Put the DHCP lease process steps in the correct order.",
+      items:["Discover","Offer","Request","Acknowledge"],
+      correctOrder:[0,1,2,3],
+      hint:"The mnemonic 'DORA' gives you the order directly."},
+    {id:20, category:"Network Implementation", title:"Cable & Connector Use Cases", type:"match",
+      summary:"Match each connector/cable to what it's typically used for.",
+      leftLabel:"Cable / Connector", rightLabel:"Typical Use",
+      pairs:[
+        ["RJ45","Twisted-pair copper Ethernet"],
+        ["RJ11","Telephone / DSL line"],
+        ["LC / SC","Fiber optic patch connections"],
+        ["F-Type","Coaxial cable (cable/satellite TV)"],
+        ["DB-9 (Console)","Direct CLI connection to a switch/router console port"]
+      ],
+      hint:"RJ45 is the standard 8-pin connector used for nearly all modern Ethernet."},
+
+    // ---- Domain 3: Network Operations ----
+    {id:21, category:"Network Operations", title:"Troubleshooting Methodology", type:"order",
+      summary:"Put CompTIA's network troubleshooting methodology steps in the correct order.",
+      items:["Identify the problem","Establish a theory of probable cause","Test the theory to determine the cause","Establish a plan of action and identify potential effects","Implement the solution or escalate","Verify full system functionality and implement preventive measures","Document findings, actions, and outcomes"],
+      correctOrder:[0,1,2,3,4,5,6],
+      hint:"You always identify before theorizing, and you always document last."},
+    {id:22, category:"Network Operations", title:"Diagnostic Commands", type:"match",
+      summary:"Match each task to the command you'd use to accomplish it.",
+      leftLabel:"Task", rightLabel:"Command",
+      pairs:[
+        ["View active TCP/UDP connections","netstat"],
+        ["Test basic connectivity to a host","ping"],
+        ["Trace the path packets take to a destination","tracert / traceroute"],
+        ["Resolve a hostname to an IP address","nslookup"],
+        ["View local IP configuration","ipconfig / ifconfig"],
+        ["View the local ARP cache","arp -a"]
+      ],
+      hint:"These are the same commands used in the Command Line Simulator lab."},
+    {id:23, category:"Network Operations", title:"SNMP Components", type:"match",
+      summary:"Match each SNMP term to its definition.",
+      leftLabel:"Term", rightLabel:"Definition",
+      pairs:[
+        ["Manager","The system that monitors and manages network devices (NMS)"],
+        ["Agent","Software on a managed device that collects and reports data"],
+        ["MIB","Database structure defining what information can be collected from a device"],
+        ["Trap","An unsolicited alert sent from an agent to the manager when an event occurs"]
+      ],
+      hint:"A 'trap' is the device proactively telling the manager something happened, rather than waiting to be asked."},
+    {id:24, category:"Network Operations", title:"Backup Types", type:"match",
+      summary:"Match each backup type to its description.",
+      leftLabel:"Backup Type", rightLabel:"Description",
+      pairs:[
+        ["Full Backup","Copies all selected data every time; longest backup, fastest restore"],
+        ["Incremental Backup","Copies only data changed since the last backup; fastest backup, slower restore"],
+        ["Differential Backup","Copies data changed since the last full backup; restore needs only the full + latest differential"],
+        ["Snapshot","Captures the state of a system at a point in time, often used for VMs"]
+      ],
+      hint:"Incremental only looks back to the last backup of any kind; differential always looks back to the last full."},
+    {id:25, category:"Network Operations", title:"High Availability Concepts", type:"match",
+      summary:"Match each high-availability term to its description.",
+      leftLabel:"Term", rightLabel:"Description",
+      pairs:[
+        ["Active-Active","All nodes handle traffic simultaneously, sharing the load"],
+        ["Active-Passive","One node handles traffic while a standby node waits to take over on failure"],
+        ["NIC Teaming","Combines multiple network interfaces for redundancy and/or increased throughput"],
+        ["Clustering","A group of servers working together and presented as a single system"]
+      ],
+      hint:"Active-active shares load right now; active-passive keeps a backup in reserve."},
+    {id:26, category:"Network Operations", title:"Network Documentation Types", type:"match",
+      summary:"Match each documentation type to what it captures.",
+      leftLabel:"Documentation", rightLabel:"Captures",
+      pairs:[
+        ["Physical Network Diagram","The actual physical layout of devices and cabling"],
+        ["Logical Network Diagram","How data flows and how devices are logically connected (IP scheme, VLANs)"],
+        ["Wiring Schematic","Cable types, pinouts, and connections between ports"],
+        ["IDF/MDF Documentation","The location and layout of intermediate/main distribution frames"]
+      ],
+      hint:"Physical = what it looks like on a floor plan; logical = how the IP addressing/VLANs flow."},
+    {id:27, category:"Network Operations", title:"Monitoring Metrics", type:"match",
+      summary:"Match each networking metric to its definition.",
+      leftLabel:"Metric", rightLabel:"Definition",
+      pairs:[
+        ["Latency","The time it takes for data to travel from source to destination"],
+        ["Jitter","Variation in packet arrival times"],
+        ["Throughput","The actual amount of data successfully transferred over a connection"],
+        ["Packet Loss","The percentage of packets that fail to reach their destination"]
+      ],
+      hint:"Jitter is about inconsistency in timing, not the delay itself."},
+    {id:28, category:"Network Operations", title:"Prioritizing VoIP Traffic", type:"single",
+      summary:"Choose the best technique to keep VoIP calls clear under heavy network load.",
+      scenario:"A company wants to ensure VoIP calls remain clear even when the network is under heavy load.",
+      options:["Implement QoS traffic prioritization for VoIP traffic","Increase the DHCP lease time","Disable Spanning Tree Protocol","Implement NAT overload"],
+      correct:0,
+      hint:"None of the other options affect how traffic is prioritized on a congested link."},
+    {id:29, category:"Network Operations", title:"Change Management Concepts", type:"match",
+      summary:"Match each change management term to its definition.",
+      leftLabel:"Term", rightLabel:"Definition",
+      pairs:[
+        ["Request for Change (RFC)","A formal proposal describing a planned change to the network"],
+        ["Rollback Plan","Steps to revert a change if it causes unexpected issues"],
+        ["Maintenance Window","A pre-approved time period during which changes can be made with minimal impact"],
+        ["Change Advisory Board","The group that reviews and approves proposed changes"]
+      ],
+      hint:"Always have a rollback plan before making a production change."},
+    {id:30, category:"Network Operations", title:"Environmental Monitoring", type:"single",
+      summary:"Identify the most likely cause of intermittent server room hardware failures.",
+      scenario:"A server room has intermittent hardware failures, and users report the room feels unusually warm.",
+      options:["HVAC/cooling system failure","Incorrect subnet mask","Duplex mismatch","DNS misconfiguration"],
+      correct:0,
+      hint:"The other three options wouldn't cause the room to feel warm."},
+
+    // ---- Domain 4: Network Security ----
+    {id:31, category:"Network Security", title:"Firewall Types", type:"match",
+      summary:"Match each firewall type to its description.",
+      leftLabel:"Firewall Type", rightLabel:"Description",
+      pairs:[
+        ["Stateless Firewall","Filters traffic based on static rules without tracking connection state"],
+        ["Stateful Firewall","Tracks the state of active connections to make filtering decisions"],
+        ["Next-Generation Firewall (NGFW)","Combines filtering with deep packet inspection, app awareness, and IPS"],
+        ["Web Application Firewall (WAF)","Protects web applications by filtering and monitoring HTTP traffic"]
+      ],
+      hint:"NGFW is the 'everything and the kitchen sink' modern firewall."},
+    {id:32, category:"Network Security", title:"The AAA Framework", type:"match",
+      summary:"Match each part of AAA to its definition.",
+      leftLabel:"Term", rightLabel:"Definition",
+      pairs:[
+        ["Authentication","Verifies the identity of a user or device (e.g. username/password)"],
+        ["Authorization","Determines what an authenticated user is allowed to do"],
+        ["Accounting","Tracks and logs what a user did while connected"]
+      ],
+      hint:"Authentication proves who you are; authorization decides what you can do; accounting logs what you did."},
+    {id:33, category:"Network Security", title:"VPN Concepts", type:"match",
+      summary:"Match each VPN term to its description.",
+      leftLabel:"Term", rightLabel:"Description",
+      pairs:[
+        ["Site-to-Site VPN","Connects two entire networks together over the internet"],
+        ["Client-to-Site VPN","Connects an individual remote user to a network"],
+        ["Split Tunnel","Only routes corporate-destined traffic through the VPN; other traffic uses the local connection"],
+        ["Full Tunnel","Routes all of a user's traffic through the VPN"]
+      ],
+      hint:"Split tunnel trades some security for better performance on non-corporate traffic."},
+    {id:34, category:"Network Security", title:"Common Attack Types", type:"match",
+      summary:"Match each attack type to its description.",
+      leftLabel:"Attack", rightLabel:"Description",
+      pairs:[
+        ["DDoS","Overwhelms a target with traffic from multiple sources to disrupt availability"],
+        ["ARP Spoofing","Sends forged ARP messages to associate an attacker's MAC with another device's IP"],
+        ["DNS Poisoning","Corrupts DNS resolver data to redirect users to malicious sites"],
+        ["Evil Twin","A rogue wireless access point that mimics a legitimate one to intercept traffic"],
+        ["On-Path Attack (MITM)","Attacker intercepts and possibly alters communication between two parties"],
+        ["Rogue DHCP Server","An unauthorized DHCP server that hands out incorrect network configuration"]
+      ],
+      hint:"An Evil Twin attacks over Wi-Fi specifically; ARP spoofing is the classic setup for an on-path attack."},
+    {id:35, category:"Network Security", title:"IDS vs. IPS Placement", type:"single",
+      summary:"Choose the device that actively blocks malicious traffic in real time.",
+      scenario:"A company wants to actively block malicious traffic in real time, not just alert on it.",
+      options:["IPS (Intrusion Prevention System), deployed inline","IDS (Intrusion Detection System)","A passive network tap","A syslog server"],
+      correct:0,
+      hint:"Only a device placed inline (in the traffic path) can actually block traffic."},
+    {id:36, category:"Network Security", title:"Port-Based Network Access Control", type:"single",
+      summary:"Identify the technology that provides port-based network access control.",
+      scenario:"Which technology requires devices to authenticate before being granted network access at the switch port?",
+      options:["802.1X","802.1Q","802.3af","802.11ac"],
+      correct:0,
+      hint:"802.1Q is VLAN tagging; 802.3af is PoE — neither is about authentication."},
+    {id:37, category:"Network Security", title:"Wireless Security Protocols", type:"match",
+      summary:"Match each wireless security protocol to its description.",
+      leftLabel:"Protocol", rightLabel:"Description",
+      pairs:[
+        ["WEP","Legacy protocol using RC4 encryption; easily cracked, should not be used"],
+        ["WPA","Introduced TKIP to address WEP's weaknesses; still considered insecure"],
+        ["WPA2","Uses AES-CCMP encryption; widely used and considered secure when configured properly"],
+        ["WPA3","Current standard; adds SAE (replacing PSK) and stronger encryption"]
+      ],
+      hint:"They're listed in order from oldest/weakest to newest/strongest."},
+    {id:38, category:"Network Security", title:"Access Control List Rule", type:"single",
+      summary:"Choose the ACL entry that blocks Telnet from a specific subnet while allowing everything else.",
+      scenario:"An administrator wants to block all Telnet traffic (port 23) from the 10.10.20.0/24 subnet while allowing all other traffic.",
+      options:["deny tcp 10.10.20.0/24 any eq 23, then permit ip any any","permit tcp 10.10.20.0/24 any eq 23","deny ip any any","permit udp 10.10.20.0/24 any eq 23"],
+      correct:0,
+      hint:"You need an explicit deny for the Telnet traffic, followed by a permit for everything else."},
+    {id:39, category:"Network Security", title:"Physical Security Controls", type:"match",
+      summary:"Match each physical security control to its description.",
+      leftLabel:"Control", rightLabel:"Description",
+      pairs:[
+        ["Mantrap","A small space with two interlocking doors that only allows one person through at a time"],
+        ["Biometric Lock","Uses a physical characteristic (fingerprint, retina) to grant access"],
+        ["Badge Reader","Grants access based on a scanned access card"],
+        ["Camera / CCTV","Provides visual monitoring and recording of a physical area"]
+      ],
+      hint:"A mantrap is specifically designed to prevent 'tailgating' into a secure area."},
+    {id:40, category:"Network Security", title:"Risk & Availability Metrics", type:"match",
+      summary:"Match each metric to its definition.",
+      leftLabel:"Metric", rightLabel:"Definition",
+      pairs:[
+        ["MTTR","Mean Time To Repair: average time to fix a failed component and restore service"],
+        ["MTBF","Mean Time Between Failures: average time a device operates before failing"],
+        ["RPO","Recovery Point Objective: maximum acceptable amount of data loss, measured in time"],
+        ["RTO","Recovery Time Objective: maximum acceptable time to restore a service after a disruption"]
+      ],
+      hint:"RPO is about how much data you can afford to lose; RTO is about how long you can afford to be down."},
+
+    // ---- Domain 5: Network Troubleshooting ----
+    {id:41, category:"Network Troubleshooting", title:"Cable Testing Tools", type:"match",
+      summary:"Match each tool to its use case.",
+      leftLabel:"Tool", rightLabel:"Use Case",
+      pairs:[
+        ["TDR (Time Domain Reflectometer)","Locates cable breaks/faults on copper cable"],
+        ["OTDR (Optical TDR)","Locates faults and measures length on fiber optic cable"],
+        ["Tone Generator & Probe","Traces a specific cable through a bundle or wall"],
+        ["Cable Certifier","Verifies a cable meets a specific performance standard"],
+        ["Loopback Plug","Tests a port's ability to send and receive by looping the signal back"]
+      ],
+      hint:"TDR and OTDR are the copper/fiber equivalents of each other."},
+    {id:42, category:"Network Troubleshooting", title:"Wireless Coverage Issue", type:"single",
+      summary:"Identify the most likely cause of weak signal at the edge of coverage.",
+      scenario:"Users near the edge of the office report weak Wi-Fi signal and frequent disconnects, while users near the AP have no issues.",
+      options:["Insufficient signal strength/coverage at that distance","Duplicate IP address","Incorrect default gateway","DNS server unreachable"],
+      correct:0,
+      hint:"The symptom scales with distance from the AP — that points to signal strength, not a config issue."},
+    {id:43, category:"Network Troubleshooting", title:"Reading Ping Output", type:"single",
+      summary:"Diagnose what a repeated 'Request timed out' ping result most likely indicates.",
+      scenario:"A ping to a server returns 'Request timed out' for all 4 packets, with 100% packet loss reported in the summary.",
+      options:["The host is unreachable or not responding","The DNS server resolved the wrong IP","The switch port is in STP blocking state","The default gateway changed"],
+      correct:0,
+      hint:"100% loss with timeouts on every packet is the classic signature of an unreachable/unresponsive host."},
+    {id:44, category:"Network Troubleshooting", title:"Duplex Mismatch", type:"single",
+      summary:"Identify the cause of high late collisions on an otherwise healthy cable.",
+      scenario:"A connection between a switch and a server shows high late collisions and poor performance, but the cable tests fine.",
+      options:["A duplex mismatch between the switch port and NIC","An expired DHCP lease","A misconfigured ACL","DNS poisoning"],
+      correct:0,
+      hint:"Late collisions on a link that tests fine physically is a textbook duplex mismatch symptom."},
+    {id:45, category:"Network Troubleshooting", title:"Name Resolution Failure", type:"single",
+      summary:"Identify the most likely cause when IP connectivity works but name resolution doesn't.",
+      scenario:"A user can successfully ping 8.8.8.8 but cannot browse to www.example.com by name.",
+      options:["DNS resolution failure","A duplex mismatch","A bad fiber connector","An expired DHCP lease"],
+      correct:0,
+      hint:"Connectivity by IP works fine — the problem is specifically translating names to IPs."},
+    {id:46, category:"Network Troubleshooting", title:"Physical Layer Issues", type:"multi",
+      summary:"Select only the issues that occur at the Physical layer (Layer 1).",
+      prompt:"Which of the following are Physical layer (Layer 1) issues? (Select all that apply)",
+      options:["A damaged or improperly crimped cable","A failed SFP transceiver","Excessive attenuation on a long cable run","An incorrect VLAN assignment","An incorrect subnet mask"],
+      correct:[0,1,2],
+      hint:"VLAN assignment is Layer 2 and subnet masks are Layer 3 — everything else here is about the physical medium/hardware."},
+    {id:47, category:"Network Troubleshooting", title:"Reading Tracert Output", type:"single",
+      summary:"Diagnose a tracert that succeeds partway then times out for every remaining hop.",
+      scenario:"A tracert to a remote server shows successful replies through hop 3, then every subsequent hop shows 'Request timed out' with no final destination reached.",
+      options:["A routing or connectivity problem at or beyond hop 3","The local NIC is faulty","The DNS server is down","The local switch port is disabled"],
+      correct:0,
+      hint:"If the local NIC or switch port were the problem, hop 1 would already fail."},
+    {id:48, category:"Network Troubleshooting", title:"Measuring Throughput", type:"single",
+      summary:"Choose the tool best suited to measure actual achievable throughput.",
+      scenario:"Which tool would best measure the actual achievable throughput between two hosts on the network?",
+      options:["iperf","ping","tracert","nslookup"],
+      correct:0,
+      hint:"Ping measures latency, not sustained data transfer rate."},
+    {id:49, category:"Network Troubleshooting", title:"New VLAN Can't Reach Others", type:"single",
+      summary:"Diagnose why a device on a newly added VLAN can't reach devices on another VLAN.",
+      scenario:"A newly added PC on VLAN 30 cannot reach any resources on VLAN 10, though other VLAN 10 devices communicate fine with each other.",
+      options:["Inter-VLAN routing has not been configured for VLAN 30","The PC has an expired DHCP lease","A bad Ethernet cable","DNS server is unreachable"],
+      correct:0,
+      hint:"VLAN 10 devices work fine with each other — the problem is specifically crossing between VLANs."},
+    {id:50, category:"Network Troubleshooting", title:"Branch Office Subnetting Capstone", type:"subnet",
+      summary:"Allocate subnets for a branch office with four very different host requirements.",
+      scenario:"A branch office has been assigned 172.16.5.0/24. Divide it among four groups without wasting addresses or overlapping.",
+      tasks:["Start with the largest host requirement first to avoid wasted IPs and overlapping subnets.","Calculate the minimum subnet size needed for each group.","Enter the correct network address and CIDR prefix for each group."],
+      block:"172.16.5.0/24",
+      departments:[
+        {name:"Operations", hosts:100, answer:"172.16.5.0/25"},
+        {name:"Warehouse", hosts:40, answer:"172.16.5.128/26"},
+        {name:"Office", hosts:20, answer:"172.16.5.192/27"},
+        {name:"Security Cameras", hosts:8, answer:"172.16.5.224/28"}
+      ],
+      hint:"This is the same VLSM process as question 4, just with different host counts — largest first, pack them back to back."}
+  ];
+
+  let currentIndex = 0;
+  let selectedSingle = null;
+  let selectedMulti = new Set();
+  let matchSelectedLeft = null;
+  let matchState = null; // {items:[{left,right,id,matched}]}
+  let orderState = null; // {pool:[idx,...], placed:[idx,...]}
+
+  const grid = document.getElementById("pbqGrid");
+  const questionOf = document.getElementById("pbqQuestionOf");
+  const completedLabel = document.getElementById("pbqCompletedLabel");
+  const remainingLabel = document.getElementById("pbqRemainingLabel");
+  const progressFill = document.getElementById("pbqProgressFill");
+  const categoryEl = document.getElementById("pbqCategory");
+  const titleEl = document.getElementById("pbqTitle");
+  const summaryEl = document.getElementById("pbqSummary");
+  const scenarioCard = document.getElementById("pbqScenarioCard");
+  const scenarioEl = document.getElementById("pbqScenario");
+  const tasksCard = document.getElementById("pbqTasksCard");
+  const tasksEl = document.getElementById("pbqTasks");
+  const interactiveEl = document.getElementById("pbqInteractive");
+  const hintBtn = document.getElementById("pbqHintBtn");
+  const hintBox = document.getElementById("pbqHintBox");
+  const resultEl = document.getElementById("pbqResult");
+
+  function isCorrectId(id){ return progress.pbqbank.correctIds.includes(id); }
+
+  function renderGrid(){
+    grid.innerHTML = "";
+    PBQ_BANK.forEach((q, i)=>{
+      const pill = document.createElement("div");
+      let cls = "pbq-pill";
+      if(i === currentIndex) cls += " current";
+      else if(isCorrectId(q.id)) cls += " correct";
+      pill.className = cls;
+      pill.textContent = q.id;
+      pill.addEventListener("click", ()=> goTo(i));
+      grid.appendChild(pill);
+    });
+    const completed = progress.pbqbank.correctIds.length;
+    completedLabel.textContent = completed + " completed";
+    remainingLabel.textContent = (PBQ_BANK.length - completed) + " remaining";
+    progressFill.style.width = Math.round((completed/PBQ_BANK.length)*100) + "%";
+  }
+
+  function goTo(i){
+    currentIndex = Math.max(0, Math.min(PBQ_BANK.length-1, i));
+    render();
+  }
+
+  function render(){
+    const q = PBQ_BANK[currentIndex];
+    questionOf.textContent = "Question " + (currentIndex+1) + " of " + PBQ_BANK.length;
+    categoryEl.textContent = q.category;
+    titleEl.textContent = q.title;
+    summaryEl.textContent = q.summary;
+
+    if(q.scenario){
+      scenarioCard.style.display = "";
+      scenarioEl.textContent = q.scenario;
+    } else {
+      scenarioCard.style.display = "none";
+    }
+
+    if(q.tasks && q.tasks.length){
+      tasksCard.style.display = "";
+      tasksEl.innerHTML = q.tasks.map(t=>`<li>${t}</li>`).join("");
+    } else {
+      tasksCard.style.display = "none";
+    }
+
+    hintBox.classList.remove("show");
+    hintBox.textContent = q.hint || "";
+    resultEl.innerHTML = "";
+    selectedSingle = null;
+    selectedMulti = new Set();
+    matchSelectedLeft = null;
+
+    renderInteractive(q);
+    renderGrid();
+  }
+
+  function renderInteractive(q){
+    interactiveEl.innerHTML = "";
+    if(q.type === "single"){
+      const wrap = document.createElement("div");
+      wrap.className = "pbq-options";
+      q.options.forEach((opt, i)=>{
+        const el = document.createElement("div");
+        el.className = "pbq-option";
+        el.innerHTML = `<span class="marker"></span><span>${opt}</span>`;
+        el.addEventListener("click", ()=>{
+          selectedSingle = i;
+          wrap.querySelectorAll(".pbq-option").forEach((o,oi)=> o.classList.toggle("selected", oi===i));
+        });
+        wrap.appendChild(el);
+      });
+      interactiveEl.appendChild(wrap);
+    } else if(q.type === "multi"){
+      const p = document.createElement("p");
+      p.style.cssText = "color:var(--text-dim);font-size:.85rem;margin:0 0 10px;";
+      p.textContent = q.prompt;
+      interactiveEl.appendChild(p);
+      const wrap = document.createElement("div");
+      wrap.className = "pbq-options";
+      q.options.forEach((opt, i)=>{
+        const el = document.createElement("div");
+        el.className = "pbq-option";
+        el.innerHTML = `<span class="marker"></span><span>${opt}</span>`;
+        el.addEventListener("click", ()=>{
+          if(selectedMulti.has(i)) selectedMulti.delete(i); else selectedMulti.add(i);
+          el.classList.toggle("selected", selectedMulti.has(i));
+        });
+        wrap.appendChild(el);
+      });
+      interactiveEl.appendChild(wrap);
+    } else if(q.type === "match"){
+      matchState = { items: q.pairs.map(([l,r],i)=>({left:l, right:r, id:"m"+i, matched:false})) };
+      renderMatch();
+    } else if(q.type === "order"){
+      orderState = { pool: shuffle(q.items.map((_,i)=>i)), placed: [] };
+      renderOrder(q);
+    } else if(q.type === "subnet"){
+      const wrap = document.createElement("div");
+      wrap.className = "pbq-dept-grid";
+      wrap.innerHTML = `<p style="grid-column:1/-1;color:var(--text-dim);font-size:.85rem;margin:0 0 4px;">Base block: <strong style="color:var(--text);font-family:var(--mono);">${q.block}</strong></p>`;
+      q.departments.forEach((d,i)=>{
+        const card = document.createElement("div");
+        card.className = "pbq-dept-card";
+        card.innerHTML = `
+          <h4>${d.name}</h4>
+          <div class="hosts-need">Needs at least ${d.hosts} usable hosts</div>
+          <input type="text" id="subnet-ans-${i}" class="field" style="width:100%;background:var(--panel);border:1px solid var(--border);color:var(--text);padding:8px 10px;border-radius:8px;font-family:var(--mono);font-size:.85rem;" placeholder="e.g. 192.168.1.0/27">
+        `;
+        wrap.appendChild(card);
+      });
+      interactiveEl.appendChild(wrap);
+    }
+  }
+
+  function renderMatch(){
+    interactiveEl.innerHTML = "";
+    const columns = document.createElement("div");
+    columns.className = "match-columns";
+    const q = PBQ_BANK[currentIndex];
+    columns.innerHTML = `
+      <div class="match-col"><h4>${q.leftLabel}</h4><div class="mc-left"></div></div>
+      <div class="match-col"><h4>${q.rightLabel}</h4><div class="mc-right"></div></div>
+    `;
+    interactiveEl.appendChild(columns);
+    const leftCol = columns.querySelector(".mc-left");
+    const rightCol = columns.querySelector(".mc-right");
+    const rightShuffled = shuffle(matchState.items);
+
+    matchState.items.forEach(it=>{
+      const el = document.createElement("div");
+      el.className = "match-item" + (it.matched ? " matched" : "") + (matchSelectedLeft===it.id ? " selected" : "");
+      el.textContent = it.left;
+      if(!it.matched){
+        el.addEventListener("click", ()=>{ matchSelectedLeft = it.id; renderMatch(); });
+      }
+      leftCol.appendChild(el);
+    });
+
+    rightShuffled.forEach(it=>{
+      const el = document.createElement("div");
+      el.className = "match-item" + (it.matched ? " matched" : "");
+      el.textContent = it.right;
+      if(!it.matched){
+        el.addEventListener("click", ()=>{
+          if(!matchSelectedLeft) return;
+          const leftItem = matchState.items.find(x=>x.id===matchSelectedLeft);
+          if(leftItem.id === it.id){
+            leftItem.matched = true;
+            matchSelectedLeft = null;
+            renderMatch();
+          } else {
+            el.classList.add("wrong-flash");
+            setTimeout(()=>{ matchSelectedLeft = null; renderMatch(); }, 400);
+          }
+        });
+      }
+      rightCol.appendChild(el);
+    });
+  }
+
+  function renderOrder(q){
+    interactiveEl.innerHTML = "";
+    const poolWrap = document.createElement("div");
+    poolWrap.className = "pbq-order-pool";
+    orderState.pool.forEach(idx=>{
+      const el = document.createElement("div");
+      el.className = "pbq-option";
+      el.style.cssText = "margin-bottom:0;";
+      el.textContent = q.items[idx];
+      el.addEventListener("click", ()=>{
+        orderState.placed.push(idx);
+        orderState.pool = orderState.pool.filter(x=>x!==idx);
+        renderOrder(q);
+      });
+      poolWrap.appendChild(el);
+    });
+    interactiveEl.appendChild(poolWrap);
+
+    const slotsWrap = document.createElement("div");
+    slotsWrap.className = "pbq-order-slots";
+    for(let i=0;i<q.items.length;i++){
+      const slot = document.createElement("div");
+      const idx = orderState.placed[i];
+      slot.className = "pbq-order-slot" + (idx!==undefined ? " filled" : "");
+      slot.innerHTML = `<span class="slot-num">${i+1}.</span><span>${idx!==undefined ? q.items[idx] : "Click a step above to place it here"}</span>`;
+      if(idx!==undefined){
+        slot.addEventListener("click", ()=>{
+          orderState.pool.push(idx);
+          orderState.placed = orderState.placed.filter((_,pi)=>pi!==i);
+          renderOrder(q);
+        });
+      }
+      slotsWrap.appendChild(slot);
+    }
+    interactiveEl.appendChild(slotsWrap);
+  }
+
+  hintBtn.addEventListener("click", ()=>{
+    hintBox.classList.toggle("show");
+  });
+
+  function grade(q){
+    if(q.type === "single") return selectedSingle === q.correct;
+    if(q.type === "multi"){
+      const chosen = Array.from(selectedMulti).sort((a,b)=>a-b);
+      const need = q.correct.slice().sort((a,b)=>a-b);
+      return chosen.length===need.length && chosen.every((v,i)=>v===need[i]);
+    }
+    if(q.type === "match") return matchState.items.every(it=>it.matched);
+    if(q.type === "order"){
+      if(orderState.placed.length !== q.correctOrder.length) return false;
+      return orderState.placed.every((v,i)=>v===q.correctOrder[i]);
+    }
+    if(q.type === "subnet"){
+      return q.departments.every((d,i)=>{
+        const input = document.getElementById("subnet-ans-"+i);
+        return input && input.value.trim().toLowerCase() === d.answer.toLowerCase();
+      });
+    }
+    return false;
+  }
+
+  document.getElementById("pbqSubmit").addEventListener("click", ()=>{
+    const q = PBQ_BANK[currentIndex];
+    const ok = grade(q);
+    if(ok){
+      if(!progress.pbqbank.correctIds.includes(q.id)){
+        progress.pbqbank.correctIds.push(q.id);
+        saveProgress();
+      }
+      resultEl.innerHTML = `<div class="result-box pass"><h4>✅ Correct!</h4><p style="margin:6px 0 0;color:var(--text-dim);">Nice work — this question is marked complete.</p></div>`;
+    } else {
+      resultEl.innerHTML = `<div class="result-box fail"><h4>⚠️ Not quite</h4><p style="margin:6px 0 0;color:var(--text-dim);">Review the scenario and tasks, use the hint if you're stuck, then try again.</p></div>`;
+    }
+    renderGrid();
+  });
+
+  document.getElementById("pbqTryAgain").addEventListener("click", ()=>{
+    render();
+  });
+
+  document.getElementById("pbqPrev").addEventListener("click", ()=> goTo(currentIndex-1));
+  document.getElementById("pbqNext").addEventListener("click", ()=> goTo(currentIndex+1));
+
+  render();
+})();
+
+/* =========================================================
    RESULTS / PRINT SUMMARY
    ========================================================= */
 (function(){
@@ -1414,7 +2251,10 @@ initMatchingLab({
       const st = statusFor(lab.key);
       if(st.cls==="mastered") mastered++;
       let scoreText = "—";
-      if(lab.key==="cli"){
+      if(lab.key==="pbqbank"){
+        const correct = progress.pbqbank ? progress.pbqbank.correctIds.length : 0;
+        scoreText = correct ? `${correct}/50 correct` : "—";
+      } else if(lab.key==="cli"){
         const packs = progress.cli.packs || {};
         const done = Object.values(packs).reduce((s,p)=>s+(p.doneIds||[]).length,0);
         const total = Object.values(packs).reduce((s,p)=>s+(p.total||0),0);
