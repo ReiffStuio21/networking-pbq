@@ -1,11 +1,12 @@
 # Networking PBQ
 
-Free, self-graded performance-based practice labs for CompTIA Network+ exam prep, built by [Launchpad IT Solutions](https://launchpaditsolutions.com) so students who can't afford paid lab platforms still get hands-on practice.
+Free, self-graded performance-based practice labs for CompTIA Network+ exam prep, built by [Launching IT Solutions](https://launchingitsolutions.com) so students who can't afford paid lab platforms still get hands-on practice.
 
 ## Pages
 
 - `index.html` — homepage introducing the mentorship program and the labs
 - `networking-pbq-labs.html` — the practice lab suite:
+  - **CompTIA Network+ PBQ Practice** — a 50-question original PBQ bank spanning all five Network+ (N10-009) exam domains
   - **Network Topology Builder** — drag-and-drop devices, 5 graded scenarios (LAN, secured office, Wi-Fi branch, VLAN segmentation, site-to-site VPN)
   - **Subnetting Practice** — 3 difficulty tiers with instant grading
   - **Port & Protocol Matching**

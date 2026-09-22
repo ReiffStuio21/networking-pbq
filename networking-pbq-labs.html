@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Networking PBQ Practice Labs | Launchpad IT Solutions</title>
+<title>Networking PBQ Practice Labs | Launching IT Solutions</title>
 <link rel="stylesheet" href="site-shared.css">
 <style>
   .progress-pill{
@@ -38,11 +38,11 @@
     padding:3px 9px;border-radius:999px;
     text-transform:uppercase;letter-spacing:.03em;
   }
-  .badge.not-started{background:#2a3855;color:var(--text-dim);}
-  .badge.in-progress{background:#3a2f0e;color:var(--warn);}
-  .badge.mastered{background:#0f3a2c;color:var(--accent-2);}
+  .badge.not-started{background:#f0f0f2;color:var(--text-dim);}
+  .badge.in-progress{background:#fff4e0;color:var(--warn);}
+  .badge.mastered{background:#e8f7ee;color:var(--accent-2);}
   .lab-card button.start-btn{
-    margin-top:6px;background:var(--accent);color:#04141a;border:none;
+    margin-top:6px;background:var(--accent);color:#fff;border:none;
     padding:10px;border-radius:8px;font-weight:700;font-size:.85rem;
   }
   .reset-all{
@@ -76,7 +76,7 @@
       linear-gradient(var(--panel-2) 1px,transparent 1px),
       linear-gradient(90deg,var(--panel-2) 1px,transparent 1px);
     background-size:24px 24px;
-    background-color:#0e1728;
+    background-color:#f7f9fb;
     border:1px solid var(--border);border-radius:8px;
     height:460px;overflow:hidden;
   }
@@ -91,13 +91,13 @@
     user-select:none;touch-action:none;
   }
   .device .dev-icon{font-size:1.3rem;}
-  .device.selected{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.25);}
+  .device.selected{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,113,227,.2);}
   .device.mode-connect{cursor:crosshair;}
   .device.mode-move{cursor:grab;}
   .device.mode-delete{cursor:not-allowed;}
   .canvas-hint{
     position:absolute;bottom:8px;left:8px;font-size:.7rem;color:var(--text-dim);
-    background:rgba(18,27,46,.8);padding:4px 8px;border-radius:6px;
+    background:rgba(255,255,255,.85);border:1px solid var(--border);padding:4px 8px;border-radius:6px;
   }
   .result-box{margin-top:14px;padding:14px;border-radius:8px;border:1px solid var(--border);background:var(--panel-2);}
   .result-box.pass{border-color:var(--accent-2);}
@@ -114,8 +114,8 @@
     background:var(--panel-2);border:1px solid var(--border);color:var(--text);
     padding:9px 10px;border-radius:8px;font-family:var(--mono);font-size:.9rem;
   }
-  .field input.correct{border-color:var(--accent-2);background:#0f2a22;}
-  .field input.incorrect{border-color:var(--danger);background:#2a1414;}
+  .field input.correct{border-color:var(--accent-2);background:#e8f7ee;}
+  .field input.incorrect{border-color:var(--danger);background:#fdeaea;}
   .field .answer-hint{font-size:.72rem;color:var(--accent-2);min-height:14px;}
   .problem-display{
     font-family:var(--mono);font-size:1.15rem;background:var(--panel-2);
@@ -131,9 +131,9 @@
     padding:10px 12px;margin-bottom:8px;font-size:.85rem;cursor:pointer;transition:.12s;
   }
   .match-item:hover{border-color:var(--accent);}
-  .match-item.selected{border-color:var(--accent);background:#123047;}
-  .match-item.matched{border-color:var(--accent-2);background:#0f2a22;opacity:.65;cursor:default;}
-  .match-item.wrong-flash{border-color:var(--danger);background:#2a1414;}
+  .match-item.selected{border-color:var(--accent);background:#e8f2fc;}
+  .match-item.matched{border-color:var(--accent-2);background:#e8f7ee;opacity:.65;cursor:default;}
+  .match-item.wrong-flash{border-color:var(--danger);background:#fdeaea;}
   .match-status{margin-top:14px;font-size:.9rem;color:var(--text-dim);}
 
   /* CLI */
@@ -166,7 +166,7 @@
     flex:0 0 18px;height:18px;border-radius:5px;border:1px solid var(--border);
     display:flex;align-items:center;justify-content:center;font-size:.7rem;margin-top:1px;
   }
-  .obj-item.done .obj-check{background:var(--accent-2);border-color:var(--accent-2);color:#04140c;}
+  .obj-item.done .obj-check{background:var(--accent-2);border-color:var(--accent-2);color:#fff;}
   .obj-item.done span.obj-text{color:var(--text);text-decoration:line-through;text-decoration-color:var(--text-dim);}
 
   @media(max-width:800px){
@@ -186,9 +186,9 @@
     display:flex;align-items:center;justify-content:center;cursor:pointer;
   }
   .pbq-pill:hover{border-color:var(--accent);}
-  .pbq-pill.current{border-color:var(--accent);box-shadow:0 0 0 2px rgba(34,211,238,.25);color:var(--text);}
-  .pbq-pill.correct{background:#0f3a2c;border-color:var(--accent-2);color:var(--accent-2);}
-  .pbq-pill.incorrect{background:#3a1e1e;border-color:var(--danger);color:var(--danger);}
+  .pbq-pill.current{border-color:var(--accent);box-shadow:0 0 0 2px rgba(0,113,227,.2);color:var(--text);}
+  .pbq-pill.correct{background:#e8f7ee;border-color:var(--accent-2);color:var(--accent-2);}
+  .pbq-pill.incorrect{background:#fdeaea;border-color:var(--danger);color:var(--danger);}
   .pbq-progress-row{display:flex;justify-content:space-between;font-size:.8rem;color:var(--text-dim);margin-bottom:4px;}
   .pbq-progress-bar{height:8px;background:var(--panel-2);border-radius:99px;overflow:hidden;margin-bottom:20px;}
   .pbq-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-3));transition:width .2s;}
@@ -207,9 +207,9 @@
     cursor:pointer;font-size:.9rem;display:flex;align-items:center;gap:10px;
   }
   .pbq-option:hover{border-color:var(--accent);}
-  .pbq-option.selected{border-color:var(--accent);background:#123047;}
-  .pbq-option.correct-answer{border-color:var(--accent-2);background:#0f2a22;}
-  .pbq-option.wrong-answer{border-color:var(--danger);background:#2a1414;}
+  .pbq-option.selected{border-color:var(--accent);background:#e8f2fc;}
+  .pbq-option.correct-answer{border-color:var(--accent-2);background:#e8f7ee;}
+  .pbq-option.wrong-answer{border-color:var(--danger);background:#fdeaea;}
   .pbq-option .marker{width:18px;height:18px;border-radius:4px;border:1px solid var(--border);flex-shrink:0;}
   .pbq-option.selected .marker{background:var(--accent);border-color:var(--accent);}
   .pbq-order-pool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
@@ -259,9 +259,9 @@
 <header class="site">
   <div class="brand-row">
     <a class="brand" href="index.html">
-      <div class="brand-mark">LP</div>
+      <div class="brand-mark">L</div>
       <div class="brand-text">
-        <h1>Launchpad IT Solutions</h1>
+        <h1>Launching IT Solutions</h1>
         <span>Networking PBQ Practice Labs &mdash; Network+ Exam Prep</span>
       </div>
     </a>
@@ -290,7 +290,7 @@
     <div style="text-align:center;">
       <button class="reset-all" id="resetAllBtn">Reset all progress</button>
     </div>
-    <p class="footer-note">These labs are self-graded practice tools built by Launchpad IT Solutions. They are not affiliated with or endorsed by CompTIA and are not a substitute for the official exam.</p>
+    <p class="footer-note">These labs are self-graded practice tools built by Launching IT Solutions. They are not affiliated with or endorsed by CompTIA and are not a substitute for the official exam.</p>
   </section>
 
   <!-- PBQ BANK -->
@@ -458,9 +458,9 @@
 
     <div class="print-only" id="printHeader" style="margin-bottom:14px;">
       <div class="brand" style="margin-bottom:4px;">
-        <div class="brand-mark" style="background:#0891b2;color:#fff;">LP</div>
+        <div class="brand-mark" style="background:#1d1d1f;color:#fff;">L</div>
         <div class="brand-text">
-          <h1 style="color:#111;">Launchpad IT Solutions</h1>
+          <h1 style="color:#111;">Launching IT Solutions</h1>
           <span style="color:#555;">Networking PBQ Practice Labs &mdash; Progress Summary</span>
         </div>
       </div>
@@ -475,7 +475,7 @@
       <tbody id="resultsBody"></tbody>
     </table>
 
-    <p class="footer-note" style="text-align:left;">This is a self-reported practice summary generated by the Launchpad IT Solutions Networking PBQ Practice Labs. It is not an official certification and is not affiliated with or endorsed by CompTIA.</p>
+    <p class="footer-note" style="text-align:left;">This is a self-reported practice summary generated by the Launching IT Solutions Networking PBQ Practice Labs. It is not an official certification and is not affiliated with or endorsed by CompTIA.</p>
   </section>
 
 </main>
@@ -834,7 +834,7 @@ function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
       const line = document.createElementNS("http://www.w3.org/2000/svg","line");
       line.setAttribute("x1",a.x); line.setAttribute("y1",a.y);
       line.setAttribute("x2",b.x); line.setAttribute("y2",b.y);
-      line.setAttribute("stroke","#22d3ee");
+      line.setAttribute("stroke","#0071e3");
       line.setAttribute("stroke-width","2.5");
       svg.appendChild(hit);
       svg.appendChild(line);
@@ -1199,7 +1199,7 @@ initMatchingLab({
       net:{
         localIp: "192.168.1.50", localMask: "255.255.255.0", gateway: "192.168.1.1",
         mac: "AA-BB-CC-11-22-33", dns: "8.8.8.8",
-        dnsTable: { "www.launchpadit.com": "203.0.113.10", "fileserver": "192.168.1.20" },
+        dnsTable: { "www.launchingit.com": "203.0.113.10", "fileserver": "192.168.1.20" },
         offlineHosts: ["192.168.1.20","fileserver"],
         arpTable: [
           ["192.168.1.1","00-11-22-AA-BB-01","dynamic"],
@@ -1210,9 +1210,9 @@ initMatchingLab({
       objectives:[
         {id:"ip", text:"Find your PC's IP address and default gateway", test:cmd=>/^ipconfig(\s|$)/.test(cmd)},
         {id:"mac", text:"View your PC's physical (MAC) address", test:cmd=>/^ipconfig\s*\/all/.test(cmd)},
-        {id:"dns", text:"Resolve the IP address of www.launchpadit.com", test:cmd=>/^nslookup\s+www\.launchpadit\.com/.test(cmd)},
+        {id:"dns", text:"Resolve the IP address of www.launchingit.com", test:cmd=>/^nslookup\s+www\.launchingit\.com/.test(cmd)},
         {id:"down", text:"Determine whether the file server (192.168.1.20) is reachable", test:cmd=>/^ping\s+(192\.168\.1\.20|fileserver)/.test(cmd)},
-        {id:"trace", text:"Trace the network path to www.launchpadit.com", test:cmd=>/^(tracert|traceroute)\s+www\.launchpadit\.com/.test(cmd)}
+        {id:"trace", text:"Trace the network path to www.launchingit.com", test:cmd=>/^(tracert|traceroute)\s+www\.launchingit\.com/.test(cmd)}
       ]
     },
     {
@@ -1221,8 +1221,8 @@ initMatchingLab({
       net:{
         localIp: "192.168.10.50", localMask: "255.255.255.0", gateway: "192.168.10.1",
         mac: "AA-BB-CC-33-44-55", dns: "192.168.10.5",
-        dnsTable: { "printer-eng.launchpadit.local": "192.168.20.50", "fileserver.launchpadit.local": "192.168.10.20" },
-        offlineHosts: ["192.168.20.50","printer-eng.launchpadit.local"],
+        dnsTable: { "printer-eng.launchingit.local": "192.168.20.50", "fileserver.launchingit.local": "192.168.10.20" },
+        offlineHosts: ["192.168.20.50","printer-eng.launchingit.local"],
         arpTable: [
           ["192.168.10.1","00-AA-11-VL-N-01","dynamic"],
           ["192.168.10.20","00-AA-11-VL-N-02","dynamic"],
@@ -1231,9 +1231,9 @@ initMatchingLab({
       },
       objectives:[
         {id:"ip", text:"Find your PC's IP address, subnet mask, and default gateway on VLAN 10", test:cmd=>/^ipconfig(\s|$)/.test(cmd)},
-        {id:"local", text:"Confirm you can reach the file server on your own VLAN (192.168.10.20)", test:cmd=>/^ping\s+(192\.168\.10\.20|fileserver\.launchpadit\.local)/.test(cmd)},
-        {id:"cross", text:"Try to reach the Engineering printer on VLAN 20 (192.168.20.50) and observe the result", test:cmd=>/^ping\s+(192\.168\.20\.50|printer-eng\.launchpadit\.local)/.test(cmd)},
-        {id:"trace", text:"Use tracert to see how far a packet to VLAN 20 actually gets", test:cmd=>/^(tracert|traceroute)\s+(192\.168\.20\.50|printer-eng\.launchpadit\.local)/.test(cmd)}
+        {id:"local", text:"Confirm you can reach the file server on your own VLAN (192.168.10.20)", test:cmd=>/^ping\s+(192\.168\.10\.20|fileserver\.launchingit\.local)/.test(cmd)},
+        {id:"cross", text:"Try to reach the Engineering printer on VLAN 20 (192.168.20.50) and observe the result", test:cmd=>/^ping\s+(192\.168\.20\.50|printer-eng\.launchingit\.local)/.test(cmd)},
+        {id:"trace", text:"Use tracert to see how far a packet to VLAN 20 actually gets", test:cmd=>/^(tracert|traceroute)\s+(192\.168\.20\.50|printer-eng\.launchingit\.local)/.test(cmd)}
       ]
     },
     {
@@ -1242,7 +1242,7 @@ initMatchingLab({
       net:{
         localIp: "10.0.5.20", localMask: "255.255.255.0", gateway: "10.0.5.1",
         mac: "AA-BB-CC-77-88-99", dns: "1.1.1.1",
-        dnsTable: { "vpn.launchpadit.com": "203.0.113.55" },
+        dnsTable: { "vpn.launchingit.com": "203.0.113.55" },
         offlineHosts: ["172.16.1.10"],
         arpTable: [
           ["10.0.5.1","00-CC-22-VP-N-01","dynamic"],
@@ -1252,7 +1252,7 @@ initMatchingLab({
       objectives:[
         {id:"ip", text:"Check your PC's current (home network) IP configuration", test:cmd=>/^ipconfig(\s|$)/.test(cmd)},
         {id:"ping-corp", text:"Try to ping the corporate file server (172.16.1.10) and note whether it succeeds", test:cmd=>/^ping\s+172\.16\.1\.10/.test(cmd)},
-        {id:"ping-internet", text:"Ping the VPN gateway's public address (vpn.launchpadit.com) to confirm general internet connectivity", test:cmd=>/^ping\s+vpn\.launchpadit\.com/.test(cmd)},
+        {id:"ping-internet", text:"Ping the VPN gateway's public address (vpn.launchingit.com) to confirm general internet connectivity", test:cmd=>/^ping\s+vpn\.launchingit\.com/.test(cmd)},
         {id:"trace-corp", text:"Trace the route to the corporate file server to see where it fails", test:cmd=>/^(tracert|traceroute)\s+172\.16\.1\.10/.test(cmd)},
         {id:"dns-corp", text:"Try to resolve the internal name fileserver.corp.local and observe the failure", test:cmd=>/^nslookup\s+fileserver\.corp\.local/.test(cmd)}
       ]
@@ -1292,7 +1292,7 @@ initMatchingLab({
     done = new Set(pp.doneIds);
     output.innerHTML = "";
     print("Microsoft Windows [Version 10.0.19045]");
-    print("(c) Launchpad IT Solutions network simulator. Mission: " + currentPack.title);
+    print("(c) Launching IT Solutions network simulator. Mission: " + currentPack.title);
     printBlank();
     renderPackRow();
     renderObjectives();
@@ -1333,7 +1333,7 @@ initMatchingLab({
     print("Windows IP Configuration");
     printBlank();
     print("Ethernet adapter Ethernet:");
-    print("   Connection-specific DNS Suffix  . : launchpadit.local");
+    print("   Connection-specific DNS Suffix  . : launchingit.local");
     if(full){
       print("   Description . . . . . . . . . . . : Intel(R) Ethernet Adapter");
       print("   Physical Address. . . . . . . . . : " + NET.mac);
@@ -1486,14 +1486,14 @@ initMatchingLab({
     packProgress(currentPack.id).doneIds = [];
     output.innerHTML = "";
     print("Microsoft Windows [Version 10.0.19045]");
-    print("(c) Launchpad IT Solutions network simulator. Mission: " + currentPack.title);
+    print("(c) Launching IT Solutions network simulator. Mission: " + currentPack.title);
     printBlank();
     renderObjectives();
   });
 
   renderPackRow();
   print("Microsoft Windows [Version 10.0.19045]");
-  print("(c) Launchpad IT Solutions network simulator. Mission: " + currentPack.title);
+  print("(c) Launching IT Solutions network simulator. Mission: " + currentPack.title);
   print("Type 'help' to see supported commands.");
   printBlank();
   renderObjectives();
