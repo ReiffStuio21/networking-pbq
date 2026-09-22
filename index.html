@@ -7,67 +7,130 @@
 <meta name="description" content="Launching IT Solutions is an IT mentorship program helping people navigate skills and jobs in the IT field, with free hands-on practice labs to get started.">
 <link rel="stylesheet" href="site-shared.css">
 <style>
-  .hero{
-    padding:96px 0 76px;text-align:center;position:relative;overflow:hidden;
+  /* ---------- Marketing nav (distinct from the app's pill tab-nav) ---------- */
+  .site-nav{
+    max-width:1200px;margin:0 auto;padding:6px 24px 16px;
+    display:flex;align-items:center;justify-content:flex-end;gap:28px;
   }
+  .site-nav .nav-links{display:flex;align-items:center;gap:26px;}
+  .site-nav .nav-links a{
+    color:var(--text-dim);font-size:.88rem;font-weight:500;
+    padding:4px 0;border-bottom:1.5px solid transparent;transition:color .15s ease, border-color .15s ease;
+  }
+  .site-nav .nav-links a:hover{color:var(--text);}
+  @media(max-width:700px){
+    .site-nav{justify-content:center;}
+    .site-nav .nav-links{display:none;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{padding:64px 0 0;text-align:center;position:relative;overflow:hidden;}
   .hero-glow{
-    position:absolute;top:-220px;left:50%;transform:translateX(-50%);
-    width:900px;height:560px;pointer-events:none;z-index:-1;
-    background:radial-gradient(ellipse at center, rgba(0,113,227,.14) 0%, rgba(110,86,207,.08) 45%, rgba(0,113,227,0) 72%);
+    position:absolute;top:-260px;left:50%;transform:translateX(-50%);
+    width:1000px;height:600px;pointer-events:none;z-index:-1;
+    background:radial-gradient(ellipse at center, rgba(0,113,227,.15) 0%, rgba(110,86,207,.09) 45%, rgba(0,113,227,0) 72%);
     filter:blur(10px);
   }
   .hero .kicker{
-    display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.02em;
+    display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;letter-spacing:.01em;
     color:var(--accent);background:rgba(0,113,227,.08);
     padding:7px 16px;border-radius:999px;margin-bottom:22px;
   }
   .hero h1{
-    font-size:3.6rem;line-height:1.08;margin:0 0 18px;font-weight:650;
-    letter-spacing:-0.03em;color:var(--text);
+    font-size:3.75rem;line-height:1.06;margin:0 0 18px;font-weight:680;
+    letter-spacing:-0.035em;color:var(--text);
   }
   .hero p.lead{
-    max-width:600px;margin:0 auto 36px;color:var(--text-dim);font-size:1.22rem;line-height:1.5;font-weight:400;
+    max-width:600px;margin:0 auto 34px;color:var(--text-dim);font-size:1.22rem;line-height:1.5;font-weight:400;
   }
-  .hero .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  .hero .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;}
+  .hero .cta-note{font-size:.82rem;color:var(--text-dim);margin:0 0 60px;}
 
+  /* ---------- Hero product visual (browser-chrome mockup, no external images) ---------- */
+  .hero-visual{max-width:920px;margin:0 auto;padding:0 24px 90px;}
+  .browser-frame{
+    background:var(--panel);border:1px solid var(--border);border-radius:16px;
+    box-shadow:0 30px 70px rgba(0,0,0,.14), 0 6px 18px rgba(0,0,0,.06);
+    overflow:hidden;text-align:left;
+  }
+  .browser-bar{
+    display:flex;align-items:center;gap:8px;padding:12px 16px;
+    background:var(--panel-2);border-bottom:1px solid var(--border);
+  }
+  .browser-bar .dot{width:11px;height:11px;border-radius:50%;}
+  .browser-bar .dot.r{background:#ff5f57;} .browser-bar .dot.y{background:#febc2e;} .browser-bar .dot.g{background:#28c840;}
+  .browser-bar .url-pill{
+    margin:0 auto;background:var(--panel);border:1px solid var(--border);border-radius:999px;
+    padding:5px 18px;font-size:.78rem;color:var(--text-dim);
+  }
+  .mock-app{padding:26px 30px 30px;}
+  .mock-app .mock-tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;}
+  .mock-chip{font-size:.72rem;font-weight:600;padding:6px 13px;border-radius:999px;background:var(--panel-2);color:var(--text-dim);}
+  .mock-chip.active{background:var(--text);color:#fff;}
+  .mock-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .mock-card{background:var(--panel-2);border-radius:12px;padding:16px;}
+  .mock-card .mi{font-size:1.3rem;margin-bottom:10px;}
+  .mock-card .mt{font-size:.82rem;font-weight:600;margin-bottom:4px;}
+  .mock-card .mb{height:6px;border-radius:99px;background:var(--border);overflow:hidden;}
+  .mock-card .mb i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-3));}
+  @media(max-width:700px){ .mock-grid{grid-template-columns:1fr 1fr;} }
+
+  /* ---------- Stats strip ---------- */
+  .stats-strip{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+    padding:40px 0;margin:10px 0 90px;
+  }
+  .stats-strip .stat{text-align:center;padding:0 12px;border-left:1px solid var(--border);}
+  .stats-strip .stat:first-child{border-left:none;}
+  .stats-strip .stat .num{font-size:2.1rem;font-weight:700;letter-spacing:-0.02em;color:var(--text);}
+  .stats-strip .stat .label{font-size:.82rem;color:var(--text-dim);margin-top:4px;}
+  @media(max-width:700px){
+    .stats-strip{grid-template-columns:1fr 1fr;row-gap:28px;}
+    .stats-strip .stat:nth-child(3){border-left:none;}
+  }
+
+  /* ---------- Section shell ---------- */
   section{padding:64px 0;}
-  section h2{font-size:2.1rem;margin:0 0 12px;text-align:center;font-weight:650;letter-spacing:-0.02em;}
-  section p.section-sub{color:var(--text-dim);text-align:center;max-width:560px;margin:0 auto 44px;font-size:1.05rem;line-height:1.55;}
+  section h2{font-size:2.2rem;margin:0 0 12px;text-align:center;font-weight:660;letter-spacing:-0.025em;}
+  section p.section-sub{color:var(--text-dim);text-align:center;max-width:560px;margin:0 auto 46px;font-size:1.05rem;line-height:1.55;}
 
-  .value-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;}
-  .value-card{padding:26px;}
-  .value-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:transparent;}
-  .value-card .icon-badge{
-    width:44px;height:44px;border-radius:12px;background:var(--panel-2);
-    display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:16px;
+  /* ---------- Bento feature grid ---------- */
+  .bento{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:180px;gap:16px;}
+  .bento-card{
+    padding:26px;display:flex;flex-direction:column;justify-content:flex-end;
+    background:var(--panel-2);border:1px solid var(--border);position:relative;overflow:hidden;
   }
-  .value-card h3{margin:0 0 8px;font-size:1.05rem;font-weight:600;letter-spacing:-0.01em;}
-  .value-card p{margin:0;color:var(--text-dim);font-size:.9rem;line-height:1.55;}
+  .bento-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
+  .bento-card.lg{grid-column:span 2;grid-row:span 2;background:linear-gradient(160deg,#eef5ff 0%, var(--panel-2) 60%);}
+  .bento-card .icon-badge{
+    width:44px;height:44px;border-radius:12px;background:var(--panel);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:14px;
+  }
+  .bento-card h3{margin:0 0 6px;font-size:1.06rem;font-weight:640;letter-spacing:-0.01em;}
+  .bento-card p{margin:0;color:var(--text-dim);font-size:.88rem;line-height:1.5;}
+  .bento-card .tag{
+    position:absolute;top:20px;right:20px;font-size:.68rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+    color:var(--accent);background:rgba(0,113,227,.08);padding:4px 10px;border-radius:999px;
+  }
+  .mini-pbq-grid{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:auto;padding-top:6px;max-width:280px;}
+  .mini-pbq-grid span{
+    width:24px;height:24px;border-radius:6px;background:var(--panel);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--text-dim);
+  }
+  .mini-pbq-grid span.done{background:var(--accent-2);border-color:var(--accent-2);color:#fff;}
+  .mini-pbq-grid span.current{background:var(--accent);border-color:var(--accent);color:#fff;}
+  @media(max-width:900px){
+    .bento{grid-template-columns:1fr 1fr;}
+    .bento-card.lg{grid-column:span 2;}
+  }
+  @media(max-width:600px){
+    .bento{grid-template-columns:1fr;}
+    .bento-card.lg{grid-column:span 1;}
+  }
 
-  .labs-callout{
-    background:linear-gradient(180deg, #f5f5f7 0%, #ffffff 100%);
-    border:1px solid var(--border);border-radius:28px;
-    padding:52px;display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;
-  }
-  .labs-callout h2{text-align:left;margin:0 0 14px;}
-  .labs-callout p{color:var(--text-dim);margin:0 0 22px;line-height:1.6;font-size:1.02rem;}
-  .labs-list{list-style:none;margin:0 0 28px;padding:0;display:flex;flex-direction:column;gap:11px;}
-  .labs-list li{display:flex;align-items:center;gap:10px;font-size:.92rem;color:var(--text);}
-  .labs-list .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;}
-  .labs-preview{
-    background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:26px;
-    box-shadow:var(--shadow-md);
-  }
-  .labs-preview .badge-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
-  .mini-badge{
-    font-size:.72rem;font-weight:600;padding:5px 11px;border-radius:999px;
-    background:var(--panel-2);color:var(--text-dim);
-  }
-  .labs-preview .score-line{display:flex;justify-content:space-between;font-size:.85rem;color:var(--text-dim);margin-bottom:8px;}
-  .labs-preview .bar{height:8px;background:var(--panel-2);border-radius:99px;overflow:hidden;margin-bottom:18px;}
-  .labs-preview .bar-fill{height:100%;width:60%;background:linear-gradient(90deg,var(--accent),var(--accent-3));}
-
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;}
+  /* ---------- How it works ---------- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;position:relative;}
   .step{padding:28px;position:relative;}
   .step:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:transparent;}
   .step .num{
@@ -76,11 +139,69 @@
   }
   .step h3{margin:0 0 8px;font-size:1.02rem;font-weight:600;letter-spacing:-0.01em;}
   .step p{margin:0;color:var(--text-dim);font-size:.9rem;line-height:1.55;}
+  @media(max-width:700px){ .steps{grid-template-columns:1fr;} }
+
+  /* ---------- Pricing ---------- */
+  .pricing-card{
+    max-width:420px;margin:0 auto;padding:40px;text-align:center;
+    background:var(--panel);border:1px solid var(--border);
+  }
+  .pricing-card .price{font-size:3.2rem;font-weight:700;letter-spacing:-0.03em;margin:6px 0 2px;}
+  .pricing-card .price span{font-size:1.05rem;font-weight:500;color:var(--text-dim);}
+  .pricing-card .plan-name{font-size:.85rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.03em;}
+  .pricing-list{list-style:none;margin:26px 0 30px;padding:0;text-align:left;display:flex;flex-direction:column;gap:12px;}
+  .pricing-list li{display:flex;align-items:flex-start;gap:10px;font-size:.92rem;color:var(--text);}
+  .pricing-list li .check{color:var(--accent-2);font-weight:700;flex-shrink:0;}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:10px;}
+  .faq-item{
+    background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-sm);
+    padding:4px 22px;
+  }
+  .faq-item summary{
+    padding:16px 0;cursor:pointer;font-weight:600;font-size:.98rem;list-style:none;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{
+    content:"+";font-size:1.3rem;font-weight:400;color:var(--text-dim);flex-shrink:0;transition:transform .2s ease;
+  }
+  .faq-item[open] summary::after{transform:rotate(45deg);}
+  .faq-item p{margin:0 0 18px;color:var(--text-dim);font-size:.9rem;line-height:1.6;}
+
+  /* ---------- Closing CTA band ---------- */
+  .cta-band{
+    background:var(--text);border-radius:28px;padding:64px 40px;text-align:center;color:#fff;
+  }
+  .cta-band h2{color:#fff;margin:0 0 12px;}
+  .cta-band p{color:rgba(255,255,255,.7);max-width:480px;margin:0 auto 30px;font-size:1.05rem;}
+  .cta-band .btn.primary{background:#fff;color:var(--text);}
+  .cta-band .btn.primary:hover{background:#f0f0f0;}
+
+  /* ---------- Footer ---------- */
+  .footer-grid{
+    max-width:1200px;margin:0 auto;padding:0 24px;
+    display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;text-align:left;margin-bottom:36px;
+  }
+  .footer-grid .fcol h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--text-dim);margin:0 0 14px;}
+  .footer-grid .fcol ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .footer-grid .fcol ul a{color:var(--text-dim);font-size:.88rem;}
+  .footer-grid .fcol ul a:hover{color:var(--accent);}
+  .footer-brand p{color:var(--text-dim);font-size:.88rem;line-height:1.6;max-width:280px;margin:10px 0 0;}
+  .footer-bottom{
+    max-width:1200px;margin:0 auto;padding:24px 24px 0;border-top:1px solid var(--border);
+    text-align:center;color:var(--text-dim);font-size:.8rem;
+  }
+  @media(max-width:700px){
+    .footer-grid{grid-template-columns:1fr;text-align:center;}
+    .footer-brand p{margin:10px auto 0;}
+  }
 
   @media(max-width:800px){
-    .hero h1{font-size:2.3rem;}
+    .hero h1{font-size:2.4rem;}
     .hero p.lead{font-size:1.05rem;}
-    .labs-callout{grid-template-columns:1fr;padding:30px;border-radius:20px;}
+    .cta-band{padding:44px 24px;border-radius:20px;}
   }
 </style>
 </head>
@@ -95,12 +216,16 @@
         <span>IT Mentorship &amp; Hands-On Practice</span>
       </div>
     </a>
+    <a href="networking-pbq-labs.html" class="btn primary">Get Started</a>
   </div>
-  <nav class="tabs">
-    <a href="index.html" class="active">Home</a>
-    <a href="index.html#why">Why Us</a>
-    <a href="index.html#how">How It Works</a>
-    <a href="networking-pbq-labs.html">Practice Labs</a>
+  <nav class="site-nav">
+    <div class="nav-links">
+      <a href="#why">Features</a>
+      <a href="#how">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="networking-pbq-labs.html">Practice Labs</a>
+    </div>
   </nav>
 </header>
 
@@ -108,74 +233,85 @@
 
   <section class="hero">
     <div class="hero-glow" aria-hidden="true"></div>
-    <span class="kicker">IT Mentorship Program</span>
-    <h1>Find Your Path in IT.</h1>
+    <span class="kicker">✦ IT Mentorship Program</span>
+    <h1>Find your path<br>in IT.</h1>
     <p class="lead">Launching IT Solutions helps people navigate the skills and jobs in the IT field &mdash; through mentorship, guidance, and free hands-on practice, no matter where you're starting from.</p>
     <div class="cta-row">
-      <a href="networking-pbq-labs.html" class="btn primary large">Explore Free Practice Labs</a>
-      <a href="#why" class="btn large">Why Us</a>
+      <a href="networking-pbq-labs.html" class="btn primary large">Start Practicing Free</a>
+      <a href="#how" class="btn large">See How It Works</a>
     </div>
+    <p class="cta-note">No sign-up. No credit card. No catch.</p>
   </section>
+
+  <div class="hero-visual reveal">
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="url-pill">networking-pbq-labs.html</span>
+      </div>
+      <div class="mock-app">
+        <div class="mock-tabs">
+          <span class="mock-chip active">Dashboard</span>
+          <span class="mock-chip">PBQ Practice (50)</span>
+          <span class="mock-chip">Topology Builder</span>
+          <span class="mock-chip">Subnetting</span>
+          <span class="mock-chip">Command Line</span>
+        </div>
+        <div class="mock-grid">
+          <div class="mock-card"><div class="mi">📝</div><div class="mt">PBQ Practice</div><div class="mb"><i style="width:64%"></i></div></div>
+          <div class="mock-card"><div class="mi">🗺️</div><div class="mt">Topology Builder</div><div class="mb"><i style="width:100%"></i></div></div>
+          <div class="mock-card"><div class="mi">🧮</div><div class="mt">Subnetting</div><div class="mb"><i style="width:40%"></i></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-strip reveal">
+    <div class="stat"><div class="num">50+</div><div class="label">Practice questions</div></div>
+    <div class="stat"><div class="num">6</div><div class="label">Interactive labs</div></div>
+    <div class="stat"><div class="num">100%</div><div class="label">Free, forever</div></div>
+    <div class="stat"><div class="num">0</div><div class="label">Sign-ups required</div></div>
+  </div>
 
   <section id="why">
-    <h2 class="reveal">Why Launching IT Solutions</h2>
-    <p class="section-sub reveal">We're dedicated to helping people find their path in IT &mdash; with real guidance and real practice, not just theory.</p>
-    <div class="value-grid">
-      <div class="card value-card reveal">
-        <div class="icon-badge">🧭</div>
-        <h3>Personalized Mentorship</h3>
-        <p>One-on-one guidance to help you figure out which part of IT fits you &mdash; networking, security, support, cloud, and more.</p>
-      </div>
-      <div class="card value-card reveal">
-        <div class="icon-badge">🛠️</div>
-        <h3>Hands-On Practice</h3>
-        <p>Free, self-graded labs that simulate the real performance-based tasks used in IT certification exams and on the job.</p>
-      </div>
-      <div class="card value-card reveal">
-        <div class="icon-badge">📈</div>
-        <h3>Career Guidance</h3>
-        <p>Clear next steps &mdash; certifications, skills, and experience &mdash; so you always know what to work on next.</p>
-      </div>
-      <div class="card value-card reveal">
-        <div class="icon-badge">🤝</div>
-        <h3>No-Cost Access</h3>
-        <p>Quality training shouldn't be locked behind a paywall. Our core practice tools are free for anyone who wants to learn.</p>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="labs-callout reveal">
-      <div>
-        <h2>Free Networking PBQ Practice Labs</h2>
-        <p>Can't afford paid lab platforms? Our Networking Practice Labs give you the same style of performance-based questions used in CompTIA Network+ prep &mdash; completely free, with instant self-grading.</p>
-        <ul class="labs-list">
-          <li><span class="dot"></span> 50-question CompTIA Network+ PBQ practice bank</li>
-          <li><span class="dot"></span> Drag-and-drop network topology builder</li>
-          <li><span class="dot"></span> Subnetting practice with instant feedback</li>
-          <li><span class="dot"></span> Port &amp; protocol and cable &amp; connector matching</li>
-          <li><span class="dot"></span> Simulated command-line troubleshooting missions</li>
-        </ul>
-        <a href="networking-pbq-labs.html" class="btn primary">Start Practicing &rarr;</a>
-      </div>
-      <div class="labs-preview">
-        <div class="badge-row">
-          <span class="mini-badge">PBQ Bank</span>
-          <span class="mini-badge">Topology</span>
-          <span class="mini-badge">Subnetting</span>
-          <span class="mini-badge">Ports</span>
-          <span class="mini-badge">Cables</span>
-          <span class="mini-badge">CLI</span>
+    <h2 class="reveal">Everything you need to practice</h2>
+    <p class="section-sub reveal">Real guidance and real hands-on practice &mdash; not just theory, and not locked behind a paywall.</p>
+    <div class="bento">
+      <div class="bento-card lg reveal">
+        <span class="tag">Flagship</span>
+        <div class="mini-pbq-grid" aria-hidden="true">
+          <span class="done">1</span><span class="done">2</span><span class="done">3</span><span class="current">4</span>
+          <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
         </div>
-        <div class="score-line"><span>Sample progress</span><span>4 / 6 mastered</span></div>
-        <div class="bar"><div class="bar-fill"></div></div>
-        <p style="margin:0;color:var(--text-dim);font-size:.82rem;">Your progress is saved automatically in your browser as you complete each lab.</p>
+        <div class="icon-badge">📝</div>
+        <h3>50-Question CompTIA Network+ PBQ Bank</h3>
+        <p>Original performance-based questions covering every Network+ (N10-009) domain, with instant grading and hints.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="icon-badge">🗺️</div>
+        <h3>Topology Builder</h3>
+        <p>Drag-and-drop network devices and get auto-graded against real scenarios.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="icon-badge">🧮</div>
+        <h3>Subnetting Practice</h3>
+        <p>VLSM problems with instant, field-by-field feedback.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="icon-badge">💻</div>
+        <h3>Command Line Simulator</h3>
+        <p>Real diagnostic commands across three troubleshooting missions.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="icon-badge">🔌</div>
+        <h3>Ports, Protocols &amp; Cables</h3>
+        <p>Fast-paced matching drills to lock in the facts you need to recall quickly.</p>
       </div>
     </div>
   </section>
 
   <section id="how">
-    <h2 class="reveal">How Mentorship Works</h2>
+    <h2 class="reveal">How mentorship works</h2>
     <p class="section-sub reveal">A simple path from "where do I start?" to hands-on, job-ready skills.</p>
     <div class="steps">
       <div class="card step reveal">
@@ -196,11 +332,96 @@
     </div>
   </section>
 
+  <section id="pricing">
+    <h2 class="reveal">Simple pricing</h2>
+    <p class="section-sub reveal">Quality training shouldn't be locked behind a paywall.</p>
+    <div class="card pricing-card reveal">
+      <div class="plan-name">Practice Labs</div>
+      <div class="price">$0<span>/forever</span></div>
+      <ul class="pricing-list">
+        <li><span class="check">✓</span> 50-question PBQ practice bank</li>
+        <li><span class="check">✓</span> All 6 interactive labs, unlocked</li>
+        <li><span class="check">✓</span> Unlimited attempts, instant grading</li>
+        <li><span class="check">✓</span> Progress saved automatically in your browser</li>
+        <li><span class="check">✓</span> Printable results summary</li>
+        <li><span class="check">✓</span> No account, no email, no credit card</li>
+      </ul>
+      <a href="networking-pbq-labs.html" class="btn primary large" style="width:100%;">Start Practicing Free</a>
+    </div>
+  </section>
+
+  <section id="faq">
+    <h2 class="reveal">Frequently asked questions</h2>
+    <p class="section-sub reveal">Everything you might want to know before you start.</p>
+    <div class="faq-list reveal">
+      <details class="faq-item">
+        <summary>Is this affiliated with CompTIA?</summary>
+        <p>No. These are independent, original practice tools built by Launching IT Solutions. They're not affiliated with or endorsed by CompTIA and aren't a substitute for the official exam.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do I need to create an account?</summary>
+        <p>No sign-up, no email, no password. Just open the labs and start practicing.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is it really 100% free?</summary>
+        <p>Yes. Every lab and all 50 PBQ questions are unlocked from the start &mdash; there's no premium tier or paywall.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How is my progress saved?</summary>
+        <p>Progress is stored locally in your browser (<code>localStorage</code>), so it's private to your device. If you switch browsers or clear site data, your progress won't carry over.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I use this on my phone?</summary>
+        <p>Yes, the labs are responsive and work on mobile, though the Topology Builder is easiest to use with a mouse or trackpad on a larger screen.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Will more labs or certifications be added?</summary>
+        <p>Network+ is the current focus. Reach out through Launching IT Solutions if there's a certification or topic you'd like to see next.</p>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <div class="cta-band reveal">
+      <h2>Ready to start practicing?</h2>
+      <p>Jump straight into the labs &mdash; no sign-up required.</p>
+      <a href="networking-pbq-labs.html" class="btn primary large">Explore Free Practice Labs</a>
+    </div>
+  </section>
+
 </main>
 
 <footer class="site-footer">
-  <p>Launching IT Solutions &mdash; helping people find their path in IT.</p>
-  <p><a href="networking-pbq-labs.html">Free Practice Labs</a></p>
+  <div class="footer-grid">
+    <div class="fcol footer-brand">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">L</div>
+        <div class="brand-text"><h1>Launching IT Solutions</h1></div>
+      </a>
+      <p>An IT mentorship program helping people find their path in IT through guidance and free hands-on practice.</p>
+    </div>
+    <div class="fcol">
+      <h4>Practice Labs</h4>
+      <ul>
+        <li><a href="networking-pbq-labs.html">PBQ Practice (50)</a></li>
+        <li><a href="networking-pbq-labs.html">Topology Builder</a></li>
+        <li><a href="networking-pbq-labs.html">Subnetting Practice</a></li>
+        <li><a href="networking-pbq-labs.html">Command Line Simulator</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="index.html#why">Features</a></li>
+        <li><a href="index.html#how">How It Works</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>Launching IT Solutions &mdash; helping people find their path in IT. These labs are not affiliated with or endorsed by CompTIA.</p>
+  </div>
 </footer>
 
 <script>
