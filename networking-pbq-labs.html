@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Networking PBQ Practice Labs | Launching IT Solutions</title>
 <link rel="stylesheet" href="site-shared.css">
+<script src="exam-bank.js"></script>
 <style>
   .progress-pill{
     font-size:.75rem;color:var(--text-dim);
@@ -226,6 +227,43 @@
   .pbq-dept-card .hosts-need{font-size:.78rem;color:var(--text-dim);margin-bottom:8px;}
   .pbq-nav-row{display:flex;justify-content:space-between;margin-top:16px;}
 
+  /* Full Practice Exam simulator */
+  .exam-setup{max-width:640px;margin:0 auto;text-align:center;}
+  .exam-length-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0 28px;}
+  .exam-length-card{
+    background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+    padding:22px 16px;cursor:pointer;transition:border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  }
+  .exam-length-card:hover{border-color:var(--accent);box-shadow:var(--shadow-md);transform:translateY(-2px);}
+  .exam-length-card .elen{font-size:1.8rem;font-weight:700;color:var(--accent);}
+  .exam-length-card .etime{font-size:.8rem;color:var(--text-dim);margin-top:4px;}
+  .exam-length-card .elabel{font-size:.92rem;font-weight:600;margin-top:10px;}
+  @media(max-width:700px){ .exam-length-grid{grid-template-columns:1fr;} }
+
+  .exam-header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+  .exam-timer{
+    font-family:var(--mono);font-size:1.1rem;font-weight:700;padding:8px 16px;border-radius:999px;
+    background:var(--panel-2);color:var(--text);
+  }
+  .exam-timer.low{background:#fdeaea;color:var(--danger);}
+  .exam-progress-row{display:flex;justify-content:space-between;font-size:.8rem;color:var(--text-dim);margin-bottom:4px;}
+  .exam-progress-bar{height:8px;background:var(--panel-2);border-radius:99px;overflow:hidden;margin-bottom:20px;}
+  .exam-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-3));transition:width .2s;}
+
+  .exam-domain-summary{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:20px 0;
+  }
+  .exam-domain-card{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:14px;}
+  .exam-domain-card .dname{font-size:.82rem;font-weight:600;margin-bottom:6px;}
+  .exam-domain-card .dscore{font-size:1.3rem;font-weight:700;}
+  .exam-domain-card .dbar{height:6px;border-radius:99px;background:var(--border);overflow:hidden;margin-top:8px;}
+  .exam-domain-card .dbar i{display:block;height:100%;background:var(--accent-2);}
+  .exam-score-hero{text-align:center;padding:40px 20px;}
+  .exam-score-hero .big-pct{font-size:3.2rem;font-weight:700;letter-spacing:-0.02em;}
+  .exam-score-hero .pass-badge{display:inline-block;margin-top:8px;font-size:.85rem;font-weight:700;padding:5px 14px;border-radius:999px;}
+  .exam-score-hero .pass-badge.pass{background:#e8f7ee;color:var(--accent-2);}
+  .exam-score-hero .pass-badge.fail{background:#fff4e0;color:var(--warn);}
+
   /* Results / print summary */
   .results-name-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:18px;}
   .results-name-row .field{min-width:220px;}
@@ -271,6 +309,7 @@
     <a href="index.html">&larr; Home</a>
     <button data-view="dashboard" class="active">Dashboard</button>
     <button data-view="pbqbank">PBQ Practice (50)</button>
+    <button data-view="examsim">Full Exam (200)</button>
     <button data-view="topology">Topology Builder</button>
     <button data-view="subnetting">Subnetting</button>
     <button data-view="ports">Ports &amp; Protocols</button>
@@ -443,6 +482,81 @@
     </div>
   </section>
 
+  <!-- FULL PRACTICE EXAM SIMULATOR -->
+  <section class="view" id="view-examsim">
+    <h2 class="view-title">Full Practice Exam</h2>
+    <p class="view-sub">200 original, timed, multiple-choice questions modeled on the CompTIA Network+ (N10-009) exam &mdash; with hints and detailed explanations to coach you through every question.</p>
+
+    <!-- Setup screen -->
+    <div id="examSetup" class="exam-setup">
+      <p style="color:var(--text-dim);font-size:.92rem;">Pick a length. Options are shuffled every time, and you'll get a hint button plus a full explanation after each question &mdash; think of it as a mentor sitting next to you, not a cold test.</p>
+      <div class="exam-length-grid">
+        <div class="exam-length-card" data-len="25">
+          <div class="elen">25</div>
+          <div class="etime">~25 min</div>
+          <div class="elabel">Quick Practice</div>
+        </div>
+        <div class="exam-length-card" data-len="90">
+          <div class="elen">90</div>
+          <div class="etime">~90 min</div>
+          <div class="elabel">Standard (real exam length)</div>
+        </div>
+        <div class="exam-length-card" data-len="200">
+          <div class="elen">200</div>
+          <div class="etime">~200 min</div>
+          <div class="elabel">Full Question Bank</div>
+        </div>
+      </div>
+      <div id="examLastResult" class="card" style="text-align:left;display:none;"></div>
+    </div>
+
+    <!-- In-progress exam screen -->
+    <div id="examRunning" style="display:none;">
+      <div class="exam-header-row">
+        <div class="pbq-sub" id="examQuestionOf"></div>
+        <div class="exam-timer" id="examTimer">--:--</div>
+      </div>
+      <div class="exam-progress-row"><span id="examAnsweredLabel">0 answered</span><span id="examCorrectLabel">0 correct so far</span></div>
+      <div class="exam-progress-bar"><div class="exam-progress-fill" id="examProgressFill" style="width:0%;"></div></div>
+
+      <div class="card pbq-card">
+        <div class="category" id="examDomain"></div>
+        <h3 id="examScenario" style="font-weight:600;font-size:1.02rem;line-height:1.5;"></h3>
+      </div>
+
+      <div id="examOptions"></div>
+
+      <div class="toolbar">
+        <button class="btn" id="examHintBtn">Need a Hint?</button>
+      </div>
+      <div class="pbq-hint-box" id="examHintBox"></div>
+
+      <div class="toolbar">
+        <button class="btn primary" id="examSubmit">Submit Answer</button>
+        <button class="btn" id="examNext" style="display:none;">Next Question &rarr;</button>
+        <button class="btn danger" id="examEndEarly">End Exam Now</button>
+      </div>
+
+      <div id="examResult"></div>
+    </div>
+
+    <!-- Final results screen -->
+    <div id="examFinal" style="display:none;">
+      <div class="card exam-score-hero">
+        <div class="big-pct" id="examFinalPct">0%</div>
+        <div style="color:var(--text-dim);" id="examFinalFraction">0 / 0 correct</div>
+        <span class="pass-badge" id="examPassBadge">Pass</span>
+      </div>
+      <h3 style="text-align:center;margin:26px 0 4px;">Performance by Domain</h3>
+      <p class="pbq-sub" style="text-align:center;">See exactly where to focus your next study session.</p>
+      <div class="exam-domain-summary" id="examDomainSummary"></div>
+      <div class="toolbar" style="justify-content:center;margin-top:24px;">
+        <button class="btn primary" id="examRetake">Take Another Exam</button>
+        <button class="btn" id="examBackToDash">Back to Dashboard</button>
+      </div>
+    </div>
+  </section>
+
   <!-- RESULTS -->
   <section class="view" id="view-results">
     <h2 class="view-title">My Results</h2>
@@ -493,6 +607,7 @@ function loadProgress(){
   }catch(e){}
   return {
     pbqbank:{correctIds:[]},
+    examsim:{attempts:0, bestScore:0, lastScore:0, lastDate:"", lastDomainStats:null},
     topology:{best:0}, subnetting:{best:0,rounds:0}, ports:{best:0}, cables:{best:0},
     cli:{ packs:{
       basics:{doneIds:[],total:5},
@@ -519,6 +634,7 @@ tabButtons.forEach(b=>b.addEventListener("click", ()=>showView(b.dataset.view)))
 /* ---------- Dashboard ---------- */
 const LAB_META = [
   {key:"pbqbank", view:"pbqbank", icon:"📝", title:"CompTIA Network+ PBQ Practice", desc:"50 original performance-based questions covering every Network+ exam domain."},
+  {key:"examsim", view:"examsim", icon:"🎓", title:"Full Practice Exam (200 Questions)", desc:"Timed, mentor-coached multiple-choice exam simulator covering all 5 Network+ domains."},
   {key:"topology", view:"topology", icon:"🗺️", title:"Network Topology Builder", desc:"Drag-and-drop devices, cable them together, and get auto-graded against a scenario."},
   {key:"subnetting", view:"subnetting", icon:"🧮", title:"Subnetting Practice", desc:"Calculate subnet mask, network/broadcast address, and usable host ranges."},
   {key:"ports", view:"ports", icon:"🔢", title:"Port & Protocol Matching", desc:"Match common protocols to their correct port numbers and transport."},
@@ -531,6 +647,12 @@ function statusFor(key){
     const correct = p && p.correctIds ? p.correctIds.length : 0;
     if(correct === 0) return {label:"Not Started", cls:"not-started"};
     if(correct >= 50) return {label:"Mastered", cls:"mastered"};
+    return {label:"In Progress", cls:"in-progress"};
+  }
+  if(key==="examsim"){
+    const best = p && p.bestScore ? p.bestScore : 0;
+    if(!p || !p.attempts) return {label:"Not Started", cls:"not-started"};
+    if(best >= 80) return {label:"Mastered", cls:"mastered"};
     return {label:"In Progress", cls:"in-progress"};
   }
   if(key==="cli"){
@@ -2227,6 +2349,209 @@ initMatchingLab({
 })();
 
 /* =========================================================
+   FULL PRACTICE EXAM SIMULATOR (200-question timed exam)
+   ========================================================= */
+(function(){
+  if(typeof EXAM_BANK === "undefined") return;
+
+  const setupEl = document.getElementById("examSetup");
+  const runningEl = document.getElementById("examRunning");
+  const finalEl = document.getElementById("examFinal");
+  const lastResultBox = document.getElementById("examLastResult");
+
+  let session = null;
+
+  function renderLastResult(){
+    if(progress.examsim && progress.examsim.attempts > 0){
+      lastResultBox.style.display = "block";
+      lastResultBox.innerHTML = `<strong>Last attempt:</strong> ${progress.examsim.lastScore}% (${progress.examsim.lastDate}) &middot; <strong>Personal best:</strong> ${progress.examsim.bestScore}%`;
+    } else {
+      lastResultBox.style.display = "none";
+    }
+  }
+  renderLastResult();
+
+  document.querySelectorAll(".exam-length-card").forEach(card=>{
+    card.addEventListener("click", ()=> startExam(parseInt(card.dataset.len,10)));
+  });
+
+  function startExam(count){
+    const pool = shuffle(EXAM_BANK).slice(0, count);
+    const questions = pool.map(q=>{
+      const shuffledOptions = shuffle(q.options.map((opt,i)=>({text:opt, isCorrect:i===q.correctIndex})));
+      return Object.assign({}, q, {shuffledOptions});
+    });
+    const domainStats = {};
+    questions.forEach(q=>{
+      if(!domainStats[q.domain]) domainStats[q.domain] = {correct:0,total:0};
+      domainStats[q.domain].total++;
+    });
+    session = {
+      questions, index:0, answers:new Array(questions.length).fill(null),
+      selectedIndex:null, correctCount:0, remaining: count*60, timerId:null, domainStats
+    };
+    setupEl.style.display = "none";
+    finalEl.style.display = "none";
+    runningEl.style.display = "block";
+    startTimer();
+    renderQuestion();
+  }
+
+  function startTimer(){
+    clearInterval(session.timerId);
+    updateTimerDisplay();
+    session.timerId = setInterval(()=>{
+      session.remaining--;
+      updateTimerDisplay();
+      if(session.remaining <= 0){
+        clearInterval(session.timerId);
+        finishExam();
+      }
+    }, 1000);
+  }
+
+  function updateTimerDisplay(){
+    const total = Math.max(0, session.remaining);
+    const m = Math.floor(total/60), s = total%60;
+    const el = document.getElementById("examTimer");
+    el.textContent = String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+    el.classList.toggle("low", total <= 60);
+  }
+
+  function renderQuestion(){
+    const q = session.questions[session.index];
+    document.getElementById("examQuestionOf").textContent = `Question ${session.index+1} of ${session.questions.length}`;
+    document.getElementById("examDomain").textContent = q.domain;
+    document.getElementById("examScenario").textContent = q.scenario;
+    const hintBox = document.getElementById("examHintBox");
+    hintBox.classList.remove("show");
+    hintBox.textContent = q.hint;
+    document.getElementById("examResult").innerHTML = "";
+    document.getElementById("examSubmit").style.display = "inline-block";
+    document.getElementById("examNext").style.display = "none";
+    session.selectedIndex = null;
+
+    const optsWrap = document.getElementById("examOptions");
+    optsWrap.innerHTML = "";
+    const wrap = document.createElement("div");
+    wrap.className = "pbq-options";
+    q.shuffledOptions.forEach((opt,i)=>{
+      const el = document.createElement("div");
+      el.className = "pbq-option";
+      el.innerHTML = `<span class="marker"></span><span>${opt.text}</span>`;
+      el.addEventListener("click", ()=>{
+        if(session.answers[session.index] !== null) return;
+        wrap.querySelectorAll(".pbq-option").forEach(o=>o.classList.remove("selected"));
+        el.classList.add("selected");
+        session.selectedIndex = i;
+      });
+      wrap.appendChild(el);
+    });
+    optsWrap.appendChild(wrap);
+    updateProgress();
+  }
+
+  document.getElementById("examHintBtn").addEventListener("click", ()=>{
+    document.getElementById("examHintBox").classList.toggle("show");
+  });
+
+  document.getElementById("examSubmit").addEventListener("click", ()=>{
+    if(session.selectedIndex === null){
+      document.getElementById("examResult").innerHTML = `<div class="result-box fail"><h4>Select an answer first</h4></div>`;
+      return;
+    }
+    const q = session.questions[session.index];
+    const chosen = q.shuffledOptions[session.selectedIndex];
+    const wasCorrect = chosen.isCorrect;
+    session.answers[session.index] = wasCorrect;
+    if(wasCorrect){
+      session.correctCount++;
+      session.domainStats[q.domain].correct++;
+    }
+    const optEls = document.querySelectorAll("#examOptions .pbq-option");
+    q.shuffledOptions.forEach((opt,i)=>{
+      if(opt.isCorrect) optEls[i].classList.add("correct-answer");
+      else if(i===session.selectedIndex) optEls[i].classList.add("wrong-answer");
+    });
+    document.getElementById("examResult").innerHTML = `
+      <div class="result-box ${wasCorrect?'pass':'fail'}">
+        <h4>${wasCorrect ? '✅ Correct' : '❌ Not quite'}</h4>
+        <p style="margin:8px 0 0;color:var(--text-dim);line-height:1.6;">${q.explanation}</p>
+      </div>`;
+    document.getElementById("examSubmit").style.display = "none";
+    document.getElementById("examNext").style.display = "inline-block";
+    updateProgress();
+  });
+
+  document.getElementById("examNext").addEventListener("click", ()=>{
+    if(session.index < session.questions.length-1){
+      session.index++;
+      renderQuestion();
+    } else {
+      finishExam();
+    }
+  });
+
+  document.getElementById("examEndEarly").addEventListener("click", ()=>{
+    if(confirm("End the exam now? Your score will be based on the questions you've answered so far.")){
+      finishExam();
+    }
+  });
+
+  function updateProgress(){
+    const answered = session.answers.filter(a=>a!==null).length;
+    document.getElementById("examAnsweredLabel").textContent = answered + " answered";
+    document.getElementById("examCorrectLabel").textContent = session.correctCount + " correct so far";
+    document.getElementById("examProgressFill").style.width = Math.round((answered/session.questions.length)*100)+"%";
+  }
+
+  function finishExam(){
+    clearInterval(session.timerId);
+    const answered = session.answers.filter(a=>a!==null).length;
+    const pct = answered>0 ? Math.round((session.correctCount/answered)*100) : 0;
+    runningEl.style.display = "none";
+    finalEl.style.display = "block";
+    document.getElementById("examFinalPct").textContent = pct+"%";
+    const unanswered = session.questions.length - answered;
+    document.getElementById("examFinalFraction").textContent =
+      `${session.correctCount} / ${answered} answered correctly` + (unanswered>0 ? ` (${unanswered} unanswered when time ended)` : "");
+    const badge = document.getElementById("examPassBadge");
+    const passed = pct >= 80;
+    badge.textContent = passed ? "Pass (practice benchmark: 80%)" : "Below practice benchmark (80%)";
+    badge.className = "pass-badge " + (passed?"pass":"fail");
+
+    const domainWrap = document.getElementById("examDomainSummary");
+    domainWrap.innerHTML = "";
+    Object.keys(session.domainStats).forEach(domain=>{
+      const s = session.domainStats[domain];
+      const dpct = s.total>0 ? Math.round((s.correct/s.total)*100) : 0;
+      const card = document.createElement("div");
+      card.className = "exam-domain-card";
+      card.innerHTML = `<div class="dname">${domain}</div><div class="dscore">${s.correct}/${s.total}</div><div class="dbar"><i style="width:${dpct}%"></i></div>`;
+      domainWrap.appendChild(card);
+    });
+
+    progress.examsim.attempts = (progress.examsim.attempts||0)+1;
+    progress.examsim.lastScore = pct;
+    progress.examsim.lastDate = new Date().toLocaleDateString();
+    if(pct > (progress.examsim.bestScore||0)) progress.examsim.bestScore = pct;
+    saveProgress();
+  }
+
+  document.getElementById("examRetake").addEventListener("click", ()=>{
+    finalEl.style.display = "none";
+    setupEl.style.display = "block";
+    renderLastResult();
+  });
+  document.getElementById("examBackToDash").addEventListener("click", ()=>{
+    finalEl.style.display = "none";
+    setupEl.style.display = "block";
+    renderLastResult();
+    showView("dashboard");
+  });
+})();
+
+/* =========================================================
    RESULTS / PRINT SUMMARY
    ========================================================= */
 (function(){
@@ -2254,6 +2579,9 @@ initMatchingLab({
       if(lab.key==="pbqbank"){
         const correct = progress.pbqbank ? progress.pbqbank.correctIds.length : 0;
         scoreText = correct ? `${correct}/50 correct` : "—";
+      } else if(lab.key==="examsim"){
+        const es = progress.examsim;
+        scoreText = (es && es.attempts) ? `${es.bestScore}% best (${es.attempts} attempt${es.attempts===1?"":"s"})` : "—";
       } else if(lab.key==="cli"){
         const packs = progress.cli.packs || {};
         const done = Object.values(packs).reduce((s,p)=>s+(p.doneIds||[]).length,0);
